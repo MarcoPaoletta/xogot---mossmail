@@ -1,0 +1,6 @@
+Hang glider
+Author: Poly by Google
+Source: https://poly.pizza/m/bIRUD686yoA
+License: Creative Commons Attribution 3.0 (CC-BY 3.0), https://creativecommons.org/licenses/by/3.0/
+Attribution is REQUIRED. Credit the author, link the license, and say if you changed the model.
+Changes made: none (file renamed to hang_glider.glb).

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PaintStyle" format=3 uid="uid://bjcnc8ustxhmf"]
+
+[ext_resource type="Material" uid="uid://bjjhcx7xryvtv" path="res://assets/materials/paint_ball_grip.tres" id="1_w8lxi"]
+[ext_resource type="Material" uid="uid://b2ey6033587kj" path="res://assets/materials/paint_grip.tres" id="2_ohjih"]
+[ext_resource type="Script" uid="uid://bpssadnib6uo7" path="res://scripts/paint/paint_style.gd" id="3_tky5x"]
+
+[resource]
+script = ExtResource("3_tky5x")
+kind_index = 1
+display_name = "Grip"
+color = Color(0.84705883, 0.16470589, 0.56078434, 1)
+highlight = Color(0.9411765, 0.38431373, 0.70980394, 1)
+blob_material = ExtResource("2_ohjih")
+ball_material = ExtResource("1_w8lxi")

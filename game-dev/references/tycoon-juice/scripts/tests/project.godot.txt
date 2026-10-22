@@ -1,0 +1,10 @@
+config_version=5
+
+[application]
+config/name="tycoon_check"
+
+[autoload]
+Wallet="*res://scripts/wallet.gd"
+
+[rendering]
+renderer/rendering_method="gl_compatibility"

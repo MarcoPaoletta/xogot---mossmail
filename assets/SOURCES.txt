@@ -1,0 +1,9 @@
+Asset sources (downloaded 2026-10-22). Each pack keeps its own license file inside its folder.
+
+nature/    Quaternius, Stylized Nature MegaKit [Standard], CC0. https://quaternius.com/packs/stylizednaturemegakit.html (glTF only kept)
+courier/   Quaternius, Universal Animation Library [Standard], CC0. https://quaternius.com/packs/universalanimationlibrary.html
+props/     KayKit (Kay Lousberg), Forest Nature Pack 1.0 FREE, CC0. https://kaylousberg.itch.io/kaykit-forest (glTF only kept)
+font/      Fredoka (Google Fonts), SIL Open Font License 1.1. Variable font Fredoka[wdth,wght].ttf from github.com/google/fonts
+textures/  ambientCG, Grass005 and Ground111, 1K-PNG, CC0. https://ambientcg.com
+
+Also in assets/: glider/ (Poly by Google, CC-BY 3.0, credit required, see CREDITS.md). Not included: water texture (ambientCG has none; use a shader). Sounds and music: not needed.

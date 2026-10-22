@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://jybi5pceamqi"]
+
+[ext_resource type="Script" uid="uid://chxee6iib4h0f" path="res://scripts/paint/paint_ball.gd" id="1_k68y6"]
+[ext_resource type="Texture2D" uid="uid://fercrrux0uki" path="res://resources/fx_shrink_curve_tex.tres" id="2_0vx4q"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_u0str"]
+radius = 0.13
+height = 0.26
+radial_segments = 20
+rings = 10
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_62yix"]
+emission_shape = 1
+emission_sphere_radius = 0.04
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_min = 0.1
+initial_velocity_max = 0.5
+gravity = Vector3(0, 0, 0)
+scale_min = 0.6
+scale_max = 1.2
+scale_curve = ExtResource("2_0vx4q")
+
+[sub_resource type="SphereMesh" id="SphereMesh_0fbwh"]
+radius = 0.05
+height = 0.1
+radial_segments = 8
+rings = 4
+
+[node name="PaintBall" type="Node3D" unique_id=1002694436]
+script = ExtResource("1_k68y6")
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=1003700676]
+mesh = SubResource("SphereMesh_u0str")
+
+[node name="Trail" type="GPUParticles3D" parent="." unique_id=440818898]
+emitting = false
+amount = 22
+lifetime = 0.28
+process_material = SubResource("ParticleProcessMaterial_62yix")
+draw_pass_1 = SubResource("SphereMesh_0fbwh")

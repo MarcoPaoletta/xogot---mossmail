@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PaintStyle" format=3 uid="uid://dfgb01xqlhh0k"]
+
+[ext_resource type="Material" uid="uid://dcssb0b2ihdpj" path="res://assets/materials/paint_ball_span.tres" id="1_pvjfi"]
+[ext_resource type="Material" uid="uid://duedd4ngt3c3b" path="res://assets/materials/paint_span.tres" id="2_mrfjw"]
+[ext_resource type="Script" uid="uid://bpssadnib6uo7" path="res://scripts/paint/paint_style.gd" id="3_nffqb"]
+
+[resource]
+script = ExtResource("3_nffqb")
+blob_material = ExtResource("2_mrfjw")
+ball_material = ExtResource("1_pvjfi")

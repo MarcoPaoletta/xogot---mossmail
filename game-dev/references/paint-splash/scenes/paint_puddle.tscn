@@ -1,0 +1,122 @@
+[gd_scene format=3 uid="uid://dq8xkku1yh242"]
+
+[ext_resource type="Script" uid="uid://cbkfeclhq4djv" path="res://scripts/paint/paint_blob.gd" id="1_m7vb3"]
+[ext_resource type="Texture2D" uid="uid://fercrrux0uki" path="res://resources/fx_shrink_curve_tex.tres" id="2_wkxhb"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_ol6tx"]
+radius = 1.0
+height = 2.0
+radial_segments = 48
+rings = 24
+
+[sub_resource type="SphereMesh" id="SphereMesh_okba6"]
+radius = 1.0
+height = 2.0
+radial_segments = 12
+rings = 16
+
+[sub_resource type="MultiMesh" id="MultiMesh_35d0o"]
+resource_local_to_scene = true
+transform_format = 1
+use_custom_data = true
+instance_count = 14
+visible_instance_count = 0
+mesh = SubResource("SphereMesh_okba6")
+
+[sub_resource type="SphereMesh" id="SphereMesh_35d0o"]
+radius = 1.0
+height = 2.0
+radial_segments = 10
+rings = 8
+
+[sub_resource type="MultiMesh" id="MultiMesh_ol6tx"]
+resource_local_to_scene = true
+transform_format = 1
+use_custom_data = true
+instance_count = 96
+visible_instance_count = 0
+mesh = SubResource("SphereMesh_35d0o")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_m788i"]
+height = 0.35
+radius = 0.8
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_p6v72"]
+height = 0.3
+radius = 0.7
+
+[sub_resource type="SphereMesh" id="SphereMesh_d4w84"]
+radius = 1.0
+height = 2.0
+radial_segments = 48
+rings = 24
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xip38"]
+emission_shape = 1
+emission_sphere_radius = 0.5
+direction = Vector3(0, 1, 0)
+spread = 75.0
+initial_velocity_min = 1.2
+initial_velocity_max = 2.8
+gravity = Vector3(0, -8, 0)
+scale_min = 0.6
+scale_max = 1.2
+scale_curve = ExtResource("2_wkxhb")
+
+[sub_resource type="SphereMesh" id="SphereMesh_5cbr5"]
+radius = 0.05
+height = 0.1
+radial_segments = 8
+rings = 4
+
+[node name="PaintPuddle" type="Node3D" unique_id=442631348]
+script = ExtResource("1_m7vb3")
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=791209622]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
+mesh = SubResource("SphereMesh_ol6tx")
+
+[node name="Drips" type="MultiMeshInstance3D" parent="Mesh" unique_id=1982078990]
+cast_shadow = 0
+multimesh = SubResource("MultiMesh_35d0o")
+
+[node name="Coil" type="MultiMeshInstance3D" parent="Mesh" unique_id=3985663]
+visible = false
+multimesh = SubResource("MultiMesh_ol6tx")
+
+[node name="Body" type="StaticBody3D" parent="." unique_id=483489419]
+collision_layer = 0
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape3D" parent="Body" unique_id=1107636408]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.175, 0)
+shape = SubResource("CylinderShape3D_m788i")
+
+[node name="Trigger" type="Area3D" parent="." unique_id=1373018786]
+collision_layer = 0
+collision_mask = 2
+monitoring = false
+monitorable = false
+
+[node name="Shape" type="CollisionShape3D" parent="Trigger" unique_id=2054793298]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_p6v72")
+
+[node name="Link" type="MeshInstance3D" parent="." unique_id=2141109076]
+visible = false
+mesh = SubResource("SphereMesh_d4w84")
+
+[node name="Fizz" type="GPUParticles3D" parent="." unique_id=1686019970]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+emitting = false
+amount = 14
+lifetime = 0.45
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_xip38")
+draw_pass_1 = SubResource("SphereMesh_5cbr5")
+
+[node name="Splat" type="Decal" parent="." unique_id=1058568540]
+visible = false
+normal_fade = 0.2
+cull_mask = 524287

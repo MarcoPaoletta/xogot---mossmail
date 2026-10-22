@@ -1,0 +1,18 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cbk480rhehrao"]
+
+[ext_resource type="Shader" uid="uid://dcj0h576pfb3e" path="res://shaders/paint_blob.gdshader" id="1_iprko"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_iprko")
+shader_parameter/paint_color = Color(0.9098039, 0.5254902, 0.039215688, 1)
+shader_parameter/highlight_color = Color(1, 0.7607843, 0.3019608, 1)
+shader_parameter/clay_color = Color(0.973, 0.878, 0.788, 1)
+shader_parameter/gloss_roughness = 0.1
+shader_parameter/self_light = 0.3
+shader_parameter/squareness = 4.2
+shader_parameter/top_height = 0.4375
+shader_parameter/bottom_height = 0.24
+shader_parameter/flare = 0.07
+shader_parameter/wobble = 0.07
+shader_parameter/splat_reach = 0.3

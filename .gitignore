@@ -1,0 +1,12 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Builds live in build/ and are never committed (game-dev skill)
+/build/
+
+# Local version snapshots. Git tags and branches (v2, v3) hold every version instead.
+/versions/
+
+# OS clutter
+.DS_Store

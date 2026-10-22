@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://dqm2br675se11"]
+
+[ext_resource type="Texture2D" uid="uid://fercrrux0uki" path="res://resources/fx_shrink_curve_tex.tres" id="1_anici"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_57owh"]
+emission_shape = 1
+emission_sphere_radius = 0.18
+direction = Vector3(0, 1, 0)
+spread = 62.0
+initial_velocity_min = 2.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, -15, 0)
+scale_min = 0.6
+scale_max = 1.3
+scale_curve = ExtResource("1_anici")
+
+[sub_resource type="SphereMesh" id="SphereMesh_8mfth"]
+radius = 0.05
+height = 0.1
+radial_segments = 8
+rings = 4
+
+[node name="PaintBurst" type="GPUParticles3D" unique_id=1526873583]
+cast_shadow = 0
+emitting = false
+amount = 16
+lifetime = 0.55
+one_shot = true
+explosiveness = 0.95
+process_material = SubResource("ParticleProcessMaterial_57owh")
+draw_pass_1 = SubResource("SphereMesh_8mfth")

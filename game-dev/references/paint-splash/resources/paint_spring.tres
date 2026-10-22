@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PaintStyle" format=3 uid="uid://chkr08bucg1mx"]
+
+[ext_resource type="Material" uid="uid://cbk480rhehrao" path="res://assets/materials/paint_spring_coil.tres" id="1_ca7ek"]
+[ext_resource type="Material" uid="uid://1fshw2kxo833" path="res://assets/materials/paint_ball_spring.tres" id="1_ivaii"]
+[ext_resource type="Script" uid="uid://bpssadnib6uo7" path="res://scripts/paint/paint_style.gd" id="3_bo5nm"]
+[ext_resource type="Material" uid="uid://bd2wvghbxomwl" path="res://assets/materials/paint_spring_gel.tres" id="3_m3c1b"]
+
+[resource]
+script = ExtResource("3_bo5nm")
+kind_index = 2
+display_name = "Spring"
+color = Color(0.9490196, 0.6313726, 0.047058824, 1)
+highlight = Color(1, 0.7607843, 0.3019608, 1)
+dock_distance = 2.6
+blob_material = ExtResource("3_m3c1b")
+ball_material = ExtResource("1_ivaii")
+accent_material = ExtResource("1_ca7ek")

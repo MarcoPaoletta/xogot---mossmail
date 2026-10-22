@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cob87lmkd4jte"]
+
+[ext_resource type="Script" uid="uid://c8l0d0ruis1tj" path="res://scripts/paint/paint_manager.gd" id="1_8w5ph"]
+[ext_resource type="Script" uid="uid://bxi7ugins2rsk" path="res://scripts/paint/paint_fx.gd" id="2_oi3cr"]
+
+[node name="PaintManager" type="Node" unique_id=1679814481]
+script = ExtResource("1_8w5ph")
+
+[node name="Balls" type="Node3D" parent="." unique_id=3506600]
+
+[node name="Blobs" type="Node3D" parent="." unique_id=1116745735]
+
+[node name="Fx" type="Node3D" parent="." unique_id=1957811843]
+script = ExtResource("2_oi3cr")
