@@ -1,0 +1,138 @@
+[gd_scene format=3 uid="uid://3afopd2rpqm2"]
+
+[ext_resource type="Script" uid="uid://c8nqv8jbbbh5x" path="res://scripts/gameplay/sky_ring.gd" id="1_oa2fl"]
+[ext_resource type="PackedScene" uid="uid://b7wlx58hx7eyr" path="res://assets/nature/glTF/Petal_1.gltf" id="2_tjpkq"]
+[ext_resource type="PackedScene" uid="uid://bgosg1rogys43" path="res://assets/nature/glTF/Petal_2.gltf" id="3_ktwsp"]
+[ext_resource type="PackedScene" uid="uid://de0wp1d8awoly" path="res://assets/nature/glTF/Petal_3.gltf" id="4_3garp"]
+[ext_resource type="PackedScene" uid="uid://diptcwlwgb5wc" path="res://assets/nature/glTF/Petal_4.gltf" id="5_yvmi7"]
+[ext_resource type="PackedScene" uid="uid://cg3p5ybgejctg" path="res://assets/nature/glTF/Petal_5.gltf" id="6_5o020"]
+[ext_resource type="Material" uid="uid://bvwjfbqpe6lcm" path="res://materials/fx_soft_glow.tres" id="7_vkaul"]
+[ext_resource type="QuadMesh" uid="uid://cxlx6eyh3a60g" path="res://materials/fx_quad.tres" id="8_xshhy"]
+[ext_resource type="Material" uid="uid://c1been3jjb0nl" path="res://materials/fx_petal.tres" id="9_ipd75"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_oa2fl"]
+radius = 5.5
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kuccb"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 0.3
+emission_ring_radius = 3.0
+emission_ring_inner_radius = 2.6
+emission_ring_cone_angle = 90.0
+direction = Vector3(0, 0, 1)
+spread = 180.0
+initial_velocity_min = 0.2
+initial_velocity_max = 0.8
+gravity = Vector3(0, 0.3, 0)
+scale_min = 0.12
+scale_max = 0.25
+color = Color(1, 0.88, 0.55, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tp1oh"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 0.3
+emission_ring_radius = 3.0
+emission_ring_inner_radius = 2.4
+emission_ring_cone_angle = 90.0
+angle_max = 360.0
+direction = Vector3(0, 0, 1)
+spread = 180.0
+initial_velocity_min = 4.0
+initial_velocity_max = 9.0
+angular_velocity_min = -360.0
+angular_velocity_max = 360.0
+gravity = Vector3(0, -5, 0)
+damping_min = 2.0
+damping_max = 4.0
+scale_min = 0.2
+scale_max = 0.38
+color = Color(1, 0.84, 0.9, 1)
+hue_variation_min = -0.12
+hue_variation_max = 0.12
+
+[node name="SkyRing" type="Area3D" unique_id=1525990082]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_oa2fl")
+
+[node name="Shape" type="CollisionShape3D" parent="." unique_id=2112089380]
+shape = SubResource("SphereShape3D_oa2fl")
+
+[node name="Visual" type="Node3D" parent="." unique_id=23730572]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0, 0)
+
+[node name="Petal1" parent="Visual" unique_id=1950608971 instance=ExtResource("2_tjpkq")]
+transform = Transform3D(-1.04907336e-07, -1.04907336e-07, -2.4, -2.4, 4.5856454e-15, 1.04907336e-07, 0, 2.4, -1.04907336e-07, 3, 0, 0)
+rotation_order = 4
+
+[node name="Petal2" parent="Visual" unique_id=1578413121 instance=ExtResource("3_ktwsp")]
+transform = Transform3D(1.1999999, -9.085242e-08, -2.0784612, -2.0784612, -5.2453665e-08, -1.1999999, 0, 2.4, -1.04907336e-07, 2.598, 1.5, 0)
+rotation_order = 4
+
+[node name="Petal3" parent="Visual" unique_id=166563794 instance=ExtResource("4_3garp")]
+transform = Transform3D(2.078461, -5.2453668e-08, -1.2, -1.2, -9.085242e-08, -2.078461, 0, 2.4, -1.04907336e-07, 1.5, 2.598, 0)
+rotation_order = 4
+
+[node name="Petal4" parent="Visual" unique_id=658525419 instance=ExtResource("5_yvmi7")]
+transform = Transform3D(2.4, 0, 0, 0, -1.04907336e-07, -2.4, 0, 2.4, -1.04907336e-07, 0, 3, 0)
+rotation_order = 4
+
+[node name="Petal5" parent="Visual" unique_id=929242258 instance=ExtResource("6_5o020")]
+transform = Transform3D(2.078461, 5.2453668e-08, 1.2, 1.2, -9.085242e-08, -2.078461, 0, 2.4, -1.04907336e-07, -1.5, 2.598, 0)
+rotation_order = 4
+
+[node name="Petal6" parent="Visual" unique_id=429525261 instance=ExtResource("2_tjpkq")]
+transform = Transform3D(1.1999999, 9.085242e-08, 2.0784612, 2.0784612, -5.2453665e-08, -1.1999999, 0, 2.4, -1.04907336e-07, -2.598, 1.5, 0)
+rotation_order = 4
+
+[node name="Petal7" parent="Visual" unique_id=1673695290 instance=ExtResource("3_ktwsp")]
+transform = Transform3D(-1.04907336e-07, 1.04907336e-07, 2.4, 2.4, 4.5856454e-15, 1.04907336e-07, 0, 2.4, -1.04907336e-07, -3, 0, 0)
+rotation_order = 4
+
+[node name="Petal8" parent="Visual" unique_id=1591840391 instance=ExtResource("4_3garp")]
+transform = Transform3D(-1.2000002, 9.085242e-08, 2.078461, 2.078461, 5.245367e-08, 1.2000002, 0, 2.4, -1.04907336e-07, -2.598, -1.5, 0)
+rotation_order = 4
+
+[node name="Petal9" parent="Visual" unique_id=335764975 instance=ExtResource("5_yvmi7")]
+transform = Transform3D(-2.078461, 5.245367e-08, 1.2000002, 1.2000002, 9.085242e-08, 2.078461, 0, 2.4, -1.04907336e-07, -1.5, -2.598, 0)
+rotation_order = 4
+
+[node name="Petal10" parent="Visual" unique_id=1074705200 instance=ExtResource("6_5o020")]
+transform = Transform3D(-2.4, -9.171291e-15, -2.0981467e-07, -2.0981467e-07, 1.04907336e-07, 2.4, 0, 2.4, -1.04907336e-07, 0, -3, 0)
+rotation_order = 4
+
+[node name="Petal11" parent="Visual" unique_id=1302355262 instance=ExtResource("2_tjpkq")]
+transform = Transform3D(-2.078461, -5.2453665e-08, -1.1999999, -1.1999999, 9.085242e-08, 2.078461, 0, 2.4, -1.04907336e-07, 1.5, -2.598, 0)
+rotation_order = 4
+
+[node name="Petal12" parent="Visual" unique_id=105791935 instance=ExtResource("3_ktwsp")]
+transform = Transform3D(-1.1999998, -9.085242e-08, -2.0784612, -2.0784612, 5.245366e-08, 1.1999998, 0, 2.4, -1.04907336e-07, 2.598, -1.5, 0)
+rotation_order = 4
+
+[node name="Glow" type="OmniLight3D" parent="." unique_id=1238616084]
+light_color = Color(1, 0.8, 0.5, 1)
+light_energy = 4.0
+omni_range = 16.0
+
+[node name="Sparkles" type="GPUParticles3D" parent="." unique_id=1929669493]
+material_override = ExtResource("7_vkaul")
+cast_shadow = 0
+amount = 40
+lifetime = 1.8
+visibility_aabb = AABB(-8, -8, -8, 16, 16, 16)
+process_material = SubResource("ParticleProcessMaterial_kuccb")
+draw_pass_1 = ExtResource("8_xshhy")
+
+[node name="Burst" type="GPUParticles3D" parent="." unique_id=1643415661]
+material_override = ExtResource("9_ipd75")
+cast_shadow = 0
+emitting = false
+amount = 80
+lifetime = 1.6
+one_shot = true
+explosiveness = 1.0
+visibility_aabb = AABB(-8, -8, -8, 16, 16, 16)
+process_material = SubResource("ParticleProcessMaterial_tp1oh")
+draw_pass_1 = ExtResource("8_xshhy")

@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dggrgh2bkmpxw"]
+
+[ext_resource type="PackedScene" uid="uid://bto5jfrvqenij" path="res://assets/nature/glTF/Plant_1_Big.gltf" id="1_qi2cb"]
+
+[node name="PlantBig" type="Node3D" unique_id=1246208849]
+
+[node name="Model" parent="." unique_id=265360882 instance=ExtResource("1_qi2cb")]

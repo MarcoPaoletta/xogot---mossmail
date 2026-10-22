@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://tv8xt3183i0t"]
+
+[ext_resource type="PackedScene" uid="uid://bdmkfl851i74e" path="res://assets/nature/glTF/Grass_Wispy_Tall.gltf" id="1_ri0ca"]
+
+[node name="GrassWispy" type="Node3D" unique_id=1493501044]
+
+[node name="Model" parent="." unique_id=1878952837 instance=ExtResource("1_ri0ca")]

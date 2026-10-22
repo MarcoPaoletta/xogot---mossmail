@@ -1,0 +1,54 @@
+extends RefCounted
+## Functional loop test for Mossmail (run with xo_game_eval, mode script).
+## Starts a shift, flies the glider through a delivery and the stamp losses,
+## and checks the results screen. Prints PASS / FAIL lines.
+
+func _run() -> void:
+	var tree: SceneTree = Engine.get_main_loop() as SceneTree
+	var main: Node = tree.current_scene
+	var glider: Glider = main.get_node("Glider") as Glider
+	var director: DeliveryDirector = main.get_node("DeliveryDirector") as DeliveryDirector
+	var terrain: TerrainField = main.get_node("Terrain") as TerrainField
+	var title: Control = main.get_node("UI/TitleScreen") as Control
+	var results: Control = main.get_node("UI/ResultsScreen") as Control
+	_check("title visible at boot", title.visible)
+	var p: Vector3 = glider.global_position
+	var ground: float = terrain.height_at(p.x, p.z)
+	print("glider altitude above ground ", snappedf(p.y - ground, 0.1))
+	_check("glider flies above the hills", p.y - ground > 10.0)
+	main.call("_start_shift")
+	await _frames(tree, 3)
+	_check("shift running", director.running and glider.active)
+	director.set("_delay_left", 0.0)
+	await _frames(tree, 3)
+	_check("first task is delivery", director.get_task_title().begins_with("Mail for"))
+	var letter_pos: Vector3 = director.get_target_position()
+	print("letter height above ground ", snappedf(letter_pos.y - terrain.height_at(letter_pos.x, letter_pos.z), 0.1))
+	_check("letter spawned ahead", letter_pos.distance_to(glider.global_position) > 20.0)
+	glider.global_position = letter_pos
+	await _frames(tree, 6)
+	_check("letter collected, now carrying", bool(director.get("_carrying")))
+	var home_pos: Vector3 = director.get_target_position()
+	print("home distance ", snappedf(home_pos.distance_to(glider.global_position), 1))
+	glider.global_position = Vector3(home_pos.x, home_pos.y + 20.0, home_pos.z)
+	await _frames(tree, 8)
+	_check("delivery completed by flying over the home", director.deliveries == 1 and director.score > 0)
+	print("score after delivery ", director.score)
+	for i: int in 3:
+		director.set("_delay_left", 0.0)
+		await _frames(tree, 3)
+		director.time_left = 0.0
+		await _frames(tree, 3)
+	_check("stamps exhausted", director.stamps == 0 and not director.running)
+	await _frames(tree, 4)
+	_check("results screen shown", results.visible)
+	_check("glider back to menu flight", not glider.active)
+
+
+func _frames(tree: SceneTree, count: int) -> void:
+	for i: int in count:
+		await tree.physics_frame
+
+
+func _check(label: String, ok: bool) -> void:
+	print(("PASS " if ok else "FAIL ") + label)

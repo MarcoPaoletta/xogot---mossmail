@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bvow3l4ao7p07"]
+
+[ext_resource type="PackedScene" uid="uid://c0i6em6ub4nsh" path="res://assets/nature/glTF/CommonTree_3.gltf" id="1_fon64"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_kdjdj"]
+height = 5.0
+radius = 0.45
+
+[node name="TreeCommon3" type="Node3D" unique_id=1443541032]
+
+[node name="Model" parent="." unique_id=433209599 instance=ExtResource("1_fon64")]
+
+[node name="Body" type="StaticBody3D" parent="." unique_id=256483972]
+
+[node name="Shape" type="CollisionShape3D" parent="Body" unique_id=1285852214]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+shape = SubResource("CylinderShape3D_kdjdj")

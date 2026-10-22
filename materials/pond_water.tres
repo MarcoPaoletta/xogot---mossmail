@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cj4sgout0ebat"]
+
+[ext_resource type="Shader" uid="uid://ctkse0tmd3vo5" path="res://shaders/pond_water.gdshader" id="1_815t8"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_815t8")
+shader_parameter/deep_color = Color(0.04, 0.2, 0.22, 0.94)
+shader_parameter/shallow_color = Color(0.22, 0.52, 0.47, 0.78)
+shader_parameter/foam_color = Color(0.9, 0.96, 0.88, 1)
+shader_parameter/foam_width = 0.05
+shader_parameter/wobble = 0.1
+shader_parameter/shape_seed = 1.0
+shader_parameter/ripple_scale = 1.6
+shader_parameter/ripple_speed = 0.35
+shader_parameter/normal_strength = 0.35

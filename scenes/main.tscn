@@ -1,0 +1,188 @@
+[gd_scene format=3 uid="uid://b3a73tcuf4phi"]
+
+[ext_resource type="Environment" uid="uid://wkbcwifb3vv8" path="res://materials/forest_environment.tres" id="1_trceg"]
+[ext_resource type="Script" uid="uid://b8lwxdsx7rwnp" path="res://scripts/game/game.gd" id="1_yc10j"]
+[ext_resource type="Material" uid="uid://cq0w38u81ltsv" path="res://materials/ground_moss.tres" id="2_a8y0u"]
+[ext_resource type="PackedScene" uid="uid://chiwfqrdkrrtd" path="res://scenes/world/chunk_pines.tscn" id="3_jkv2x"]
+[ext_resource type="PackedScene" uid="uid://m617x8q0px0t" path="res://scenes/world/chunk_grove.tscn" id="4_jbj1t"]
+[ext_resource type="Script" uid="uid://rxo1l8ca4by7" path="res://scripts/world/follow_target.gd" id="4_jscy8"]
+[ext_resource type="PackedScene" uid="uid://bdik8s1vh2b3m" path="res://scenes/world/chunk_pond.tscn" id="5_muem4"]
+[ext_resource type="Script" uid="uid://dg4hw5yragsy1" path="res://scripts/world/chunk_streamer.gd" id="5_pm3ni"]
+[ext_resource type="PackedScene" uid="uid://cem7b0ab18o0g" path="res://scenes/world/chunk_meadow.tscn" id="6_dp3eg"]
+[ext_resource type="PackedScene" uid="uid://ctkh4obnfjxvx" path="res://scenes/actors/camera_rig.tscn" id="8_gqmmt"]
+[ext_resource type="PackedScene" uid="uid://dxt174wur8e4u" path="res://scenes/ui/screen_fx.tscn" id="9_yc10j"]
+[ext_resource type="PackedScene" uid="uid://baitubsogmwbt" path="res://scenes/ui/hud.tscn" id="10_jscy8"]
+[ext_resource type="PackedScene" uid="uid://cfhhs0sqqom5k" path="res://scenes/ui/title_screen.tscn" id="11_pm3ni"]
+[ext_resource type="Script" uid="uid://bqod4m7wkn8jj" path="res://scripts/input/steer_input.gd" id="12_og1vs"]
+[ext_resource type="PackedScene" uid="uid://bwgqd5e2m51ty" path="res://scenes/ui/pause_screen.tscn" id="12_y6deb"]
+[ext_resource type="Script" uid="uid://bmq8mg67n8env" path="res://scripts/gameplay/delivery_director.gd" id="13_2wyq8"]
+[ext_resource type="PackedScene" uid="uid://cg5efugtd3ral" path="res://scenes/ui/results_screen.tscn" id="13_og1vs"]
+[ext_resource type="Material" uid="uid://bvwjfbqpe6lcm" path="res://materials/fx_soft_glow.tres" id="19_vxglm"]
+[ext_resource type="QuadMesh" uid="uid://cxlx6eyh3a60g" path="res://materials/fx_quad.tres" id="20_2f3dj"]
+[ext_resource type="Script" uid="uid://dpxvc8l1dma8j" path="res://scripts/world/terrain_field.gd" id="21_pm3ni"]
+[ext_resource type="Material" uid="uid://c1been3jjb0nl" path="res://materials/fx_petal.tres" id="21_yq6so"]
+[ext_resource type="PackedScene" uid="uid://cts3xqv0aln5l" path="res://scenes/actors/glider.tscn" id="22_y6deb"]
+[ext_resource type="PackedScene" uid="uid://78plky63vq00" path="res://scenes/world/mountain_ring.tscn" id="23_og1vs"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2wyq8"]
+size = Vector2(420, 420)
+subdivide_width = 167
+subdivide_depth = 167
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fv21b"]
+emission_shape = 3
+emission_box_extents = Vector3(34, 2.5, 34)
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_min = 0.1
+initial_velocity_max = 0.5
+gravity = Vector3(0, 0.05, 0)
+scale_min = 0.07
+scale_max = 0.14
+color = Color(1, 0.9, 0.5, 1)
+hue_variation_min = -0.04
+hue_variation_max = 0.06
+turbulence_enabled = true
+turbulence_noise_strength = 0.6
+turbulence_noise_scale = 4.0
+turbulence_influence_min = 0.05
+turbulence_influence_max = 0.15
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tel4y"]
+emission_shape = 3
+emission_box_extents = Vector3(32, 4, 32)
+angle_max = 360.0
+direction = Vector3(1, -0.4, 0.3)
+spread = 30.0
+initial_velocity_min = 0.6
+initial_velocity_max = 1.4
+angular_velocity_min = -90.0
+angular_velocity_max = 90.0
+gravity = Vector3(0.15, -0.9, 0.05)
+damping_min = 0.3
+damping_max = 0.6
+scale_min = 0.14
+scale_max = 0.24
+color = Color(1, 0.86, 0.9, 1)
+hue_variation_min = -0.1
+hue_variation_max = 0.12
+
+[node name="Main" type="Node3D" unique_id=1390277365]
+script = ExtResource("1_yc10j")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=684358706]
+environment = ExtResource("1_trceg")
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=1035956591]
+transform = Transform3D(0.81915206, -0.3686878, 0.43938506, 0, 0.76604444, 0.6427876, -0.57357645, -0.52654076, 0.62750685, 0, 0, 0)
+light_color = Color(1, 0.9, 0.74, 1)
+light_energy = 1.35
+shadow_enabled = true
+directional_shadow_mode = 1
+directional_shadow_max_distance = 70.0
+
+[node name="Ground" type="MeshInstance3D" parent="." unique_id=981320069]
+material_override = ExtResource("2_a8y0u")
+extra_cull_margin = 80.0
+mesh = SubResource("PlaneMesh_2wyq8")
+script = ExtResource("4_jscy8")
+target_path = NodePath("../Glider")
+snap = 5
+
+[node name="Forest" type="Node3D" parent="." unique_id=1818423097]
+script = ExtResource("5_pm3ni")
+target_path = NodePath("../Glider")
+
+[node name="Chunk_m1_m1" parent="Forest" unique_id=1190413605 instance=ExtResource("3_jkv2x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 0, -48)
+
+[node name="Chunk_0_m1" parent="Forest" unique_id=459634570 instance=ExtResource("4_jbj1t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -48)
+
+[node name="Chunk_1_m1" parent="Forest" unique_id=1257345570 instance=ExtResource("5_muem4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, -48)
+
+[node name="Chunk_m1_0" parent="Forest" unique_id=80144618 instance=ExtResource("4_jbj1t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 0, 0)
+
+[node name="Chunk_0_0" parent="Forest" unique_id=1743647340 instance=ExtResource("6_dp3eg")]
+
+[node name="Chunk_1_0" parent="Forest" unique_id=1104342244 instance=ExtResource("3_jkv2x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 0)
+
+[node name="Chunk_m1_1" parent="Forest" unique_id=1711683739 instance=ExtResource("5_muem4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 0, 48)
+
+[node name="Chunk_0_1" parent="Forest" unique_id=874346609 instance=ExtResource("4_jbj1t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 48)
+
+[node name="Chunk_1_1" parent="Forest" unique_id=764934093 instance=ExtResource("6_dp3eg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 48)
+
+[node name="CameraRig" parent="." unique_id=901322864 instance=ExtResource("8_gqmmt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -7)
+target_path = NodePath("../Glider")
+
+[node name="SteerInput" type="Node" parent="." unique_id=1527390358]
+script = ExtResource("12_og1vs")
+
+[node name="DeliveryDirector" type="Node" parent="." unique_id=1700608935]
+script = ExtResource("13_2wyq8")
+courier_path = NodePath("../Glider")
+streamer_path = NodePath("../Forest")
+
+[node name="FX" type="CanvasLayer" parent="." unique_id=1328269290]
+layer = 5
+
+[node name="ScreenFx" parent="FX" unique_id=1721459525 instance=ExtResource("9_yc10j")]
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1989982534]
+layer = 10
+
+[node name="Hud" parent="UI" unique_id=1406425763 instance=ExtResource("10_jscy8")]
+
+[node name="TitleScreen" parent="UI" unique_id=329151715 instance=ExtResource("11_pm3ni")]
+
+[node name="PauseScreen" parent="UI" unique_id=1818239854 instance=ExtResource("12_y6deb")]
+
+[node name="ResultsScreen" parent="UI" unique_id=1843180699 instance=ExtResource("13_og1vs")]
+
+[node name="Fireflies" type="GPUParticles3D" parent="." unique_id=1142385555]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+material_override = ExtResource("19_vxglm")
+cast_shadow = 0
+amount = 140
+lifetime = 7.0
+preprocess = 7.0
+visibility_aabb = AABB(-40, -5, -40, 80, 20, 80)
+process_material = SubResource("ParticleProcessMaterial_fv21b")
+draw_pass_1 = ExtResource("20_2f3dj")
+script = ExtResource("4_jscy8")
+target_path = NodePath("../Glider")
+follow_height = true
+offset = Vector3(0, -8, 0)
+
+[node name="DriftingPetals" type="GPUParticles3D" parent="." unique_id=328505302]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 0)
+material_override = ExtResource("21_yq6so")
+cast_shadow = 0
+amount = 60
+lifetime = 9.0
+preprocess = 9.0
+visibility_aabb = AABB(-40, -15, -40, 80, 30, 80)
+process_material = SubResource("ParticleProcessMaterial_tel4y")
+draw_pass_1 = ExtResource("20_2f3dj")
+script = ExtResource("4_jscy8")
+target_path = NodePath("../Glider")
+follow_height = true
+offset = Vector3(0, 6, 0)
+
+[node name="Terrain" type="Node" parent="." unique_id=1314426716]
+script = ExtResource("21_pm3ni")
+ground_path = NodePath("../Ground")
+
+[node name="Glider" parent="." unique_id=532663225 instance=ExtResource("22_y6deb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 26, 0)
+
+[node name="MountainRing" parent="." unique_id=1391862872 instance=ExtResource("23_og1vs")]
+target_path = NodePath("../Glider")

@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/glider/hang_glider_hang_gliderSurface_Color.png" id="1_tex"]
+
+[resource]
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.94, 0.92, 0.88, 1)
+albedo_texture = ExtResource("1_tex")

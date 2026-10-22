@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://w6cei6sjbb5t"]
+
+[ext_resource type="PackedScene" uid="uid://bobp30cvxmop2" path="res://assets/nature/glTF/Flower_3_Group.gltf" id="1_vjrv7"]
+
+[node name="Flowers3" type="Node3D" unique_id=1045876567]
+
+[node name="Model" parent="." unique_id=717253184 instance=ExtResource("1_vjrv7")]

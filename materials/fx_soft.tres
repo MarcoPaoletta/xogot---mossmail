@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://7d0ksndj1qi2"]
+
+[ext_resource type="Shader" uid="uid://b8gbjhqehaqq6" path="res://shaders/soft_particle.gdshader" id="1_lptrm"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_lptrm")
+shader_parameter/tint = Color(1, 1, 1, 1)
+shader_parameter/brightness = 1.0
+shader_parameter/petal_shape = false
+shader_parameter/softness = 0.55

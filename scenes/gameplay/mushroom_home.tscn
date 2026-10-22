@@ -1,0 +1,125 @@
+[gd_scene format=3 uid="uid://c82flnwjy8g1h"]
+
+[ext_resource type="Script" uid="uid://c84ci451wi876" path="res://scripts/gameplay/mushroom_home.gd" id="1_td2rh"]
+[ext_resource type="PackedScene" uid="uid://fquewhskjnrq" path="res://assets/nature/glTF/Mushroom_Common.gltf" id="2_h62lc"]
+[ext_resource type="PackedScene" uid="uid://w6cei6sjbb5t" path="res://scenes/props/flowers_3.tscn" id="3_c6sg7"]
+[ext_resource type="PackedScene" uid="uid://cotpx26j2o4eu" path="res://scenes/props/flowers_4.tscn" id="4_kkpqv"]
+[ext_resource type="PackedScene" uid="uid://m4ouwgitghq5" path="res://scenes/props/clover.tscn" id="5_qx4jf"]
+[ext_resource type="PackedScene" uid="uid://dnji8sve8dt81" path="res://scenes/props/bush_flowers.tscn" id="6_nkadi"]
+[ext_resource type="Material" uid="uid://bvwjfbqpe6lcm" path="res://materials/fx_soft_glow.tres" id="7_yqkl3"]
+[ext_resource type="QuadMesh" uid="uid://cxlx6eyh3a60g" path="res://materials/fx_quad.tres" id="8_5gnk0"]
+[ext_resource type="Material" uid="uid://c1been3jjb0nl" path="res://materials/fx_petal.tres" id="9_f2nlu"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_td2rh"]
+height = 6.0
+radius = 2.6
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_h62lc"]
+height = 90.0
+radius = 9.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xx1bn"]
+emission_shape = 3
+emission_box_extents = Vector3(2.4, 0.4, 2.4)
+direction = Vector3(0, 1, 0)
+spread = 8.0
+initial_velocity_min = 8.0
+initial_velocity_max = 12.0
+gravity = Vector3(0, 0.6, 0)
+damping_min = 0.2
+damping_max = 0.6
+scale_min = 0.3
+scale_max = 0.6
+color = Color(1, 0.84, 0.45, 1)
+hue_variation_min = -0.03
+hue_variation_max = 0.05
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_flkmo"]
+emission_shape = 1
+emission_sphere_radius = 1.2
+angle_max = 360.0
+direction = Vector3(0, 1, 0)
+spread = 65.0
+initial_velocity_min = 6.0
+initial_velocity_max = 11.0
+angular_velocity_min = -300.0
+angular_velocity_max = 300.0
+gravity = Vector3(0, -7, 0)
+damping_min = 1.5
+damping_max = 3.0
+scale_min = 0.22
+scale_max = 0.4
+color = Color(1, 0.8, 0.86, 1)
+hue_variation_min = -0.12
+hue_variation_max = 0.12
+
+[node name="MushroomHome" type="Node3D" unique_id=803256178]
+script = ExtResource("1_td2rh")
+
+[node name="Model" parent="." unique_id=169802004 instance=ExtResource("2_h62lc")]
+transform = Transform3D(14, 0, 0, 0, 14, 0, 0, 0, 14, 0, 0, 0)
+
+[node name="Body" type="StaticBody3D" parent="." unique_id=442481257]
+
+[node name="Shape" type="CollisionShape3D" parent="Body" unique_id=1945441750]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+shape = SubResource("CylinderShape3D_td2rh")
+
+[node name="Garden" type="Node3D" parent="." unique_id=1760499538]
+
+[node name="FlowersA" parent="Garden" unique_id=1045876567 instance=ExtResource("3_c6sg7")]
+transform = Transform3D(1.0724622, 0, 0.8999026, 0, 1.4, 0, -0.8999026, 0, 1.0724622, 5, 0, 2.6)
+
+[node name="FlowersB" parent="Garden" unique_id=343021965 instance=ExtResource("4_kkpqv")]
+transform = Transform3D(0.4104242, 0, -1.1276312, 0, 1.2, 0, 1.1276312, 0, 0.4104242, -4.6, 0, 3.6)
+
+[node name="CloverA" parent="Garden" unique_id=245330095 instance=ExtResource("5_qx4jf")]
+transform = Transform3D(1.4488888, 0, 0.38822857, 0, 1.5, 0, -0.38822857, 0, 1.4488888, 2, 0, 5.6)
+
+[node name="BushA" parent="Garden" unique_id=1938949339 instance=ExtResource("6_nkadi")]
+transform = Transform3D(-0.80000013, 0, 1.3856406, 0, 1.6, 0, -1.3856406, 0, -0.80000013, -5, 0, -3.2)
+
+[node name="WindowLight" type="OmniLight3D" parent="." unique_id=1799426353]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 4.2)
+light_color = Color(1, 0.72, 0.38, 1)
+light_energy = 2.2
+omni_range = 9.0
+
+[node name="DeliveryZone" type="Area3D" parent="." unique_id=1813468506]
+collision_layer = 8
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape3D" parent="DeliveryZone" unique_id=180210232]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 45, 0)
+shape = SubResource("CylinderShape3D_h62lc")
+
+[node name="Beacon" type="Node3D" parent="." unique_id=2043334826]
+
+[node name="BeaconLight" type="OmniLight3D" parent="Beacon" unique_id=401362350]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18, 0)
+light_color = Color(1, 0.83, 0.45, 1)
+light_energy = 6.0
+omni_range = 26.0
+
+[node name="BeaconSparkles" type="GPUParticles3D" parent="Beacon" unique_id=1536947663]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+material_override = ExtResource("7_yqkl3")
+cast_shadow = 0
+amount = 140
+lifetime = 4.0
+visibility_aabb = AABB(-8, -2, -8, 16, 60, 16)
+process_material = SubResource("ParticleProcessMaterial_xx1bn")
+draw_pass_1 = ExtResource("8_5gnk0")
+
+[node name="Confetti" type="GPUParticles3D" parent="." unique_id=1911878897]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.5, 0)
+material_override = ExtResource("9_f2nlu")
+cast_shadow = 0
+emitting = false
+amount = 90
+lifetime = 2.4
+one_shot = true
+explosiveness = 0.95
+visibility_aabb = AABB(-10, -4, -10, 20, 24, 20)
+process_material = SubResource("ParticleProcessMaterial_flkmo")
+draw_pass_1 = ExtResource("8_5gnk0")

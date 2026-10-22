@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://cg5efugtd3ral"]
+
+[ext_resource type="Theme" uid="uid://cj786csk0wg1n" path="res://ui/mossmail_theme.tres" id="1_xomqn"]
+[ext_resource type="Script" uid="uid://btevecs5rhn85" path="res://scripts/ui/results_screen.gd" id="2_dqiy6"]
+[ext_resource type="FontVariation" path="res://ui/fredoka_bold.tres" id="3_dqiy6"]
+
+[node name="ResultsScreen" type="Control" unique_id=1843180699]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_xomqn")
+script = ExtResource("2_dqiy6")
+
+[node name="Backdrop" type="ColorRect" parent="." unique_id=1127787143]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.02, 0.05, 0.03, 0.55)
+
+[node name="Center" type="CenterContainer" parent="." unique_id=539982342]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="Card" type="PanelContainer" parent="Center" unique_id=1321978673]
+layout_mode = 2
+theme_type_variation = &"CardPanel"
+
+[node name="Margin" type="MarginContainer" parent="Center/Card" unique_id=1614929989]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Column" type="VBoxContainer" parent="Center/Card/Margin" unique_id=1863236216]
+custom_minimum_size = Vector2(620, 0)
+layout_mode = 2
+theme_override_constants/separation = 22
+alignment = 1
+
+[node name="Heading" type="Label" parent="Center/Card/Margin/Column" unique_id=1825449189]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_dqiy6")
+theme_override_font_sizes/font_size = 64
+text = "Shift complete"
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="Center/Card/Margin/Column" unique_id=1448340307]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8235294, 0.47843137, 1)
+theme_override_constants/outline_size = 18
+theme_override_fonts/font = ExtResource("3_dqiy6")
+theme_override_font_sizes/font_size = 128
+text = "0"
+horizontal_alignment = 1
+
+[node name="DeliveriesLabel" type="Label" parent="Center/Card/Margin/Column" unique_id=1737912022]
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "0 deliveries"
+horizontal_alignment = 1
+
+[node name="BestLabel" type="Label" parent="Center/Card/Margin/Column" unique_id=1335483713]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Best shift: 0"
+horizontal_alignment = 1
+
+[node name="Buttons" type="HBoxContainer" parent="Center/Card/Margin/Column" unique_id=197496630]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="AgainButton" type="Button" parent="Center/Card/Margin/Column/Buttons" unique_id=307674480]
+custom_minimum_size = Vector2(0, 92)
+layout_mode = 2
+theme_override_font_sizes/font_size = 38
+text = "Another shift"
+
+[node name="MenuButton" type="Button" parent="Center/Card/Margin/Column/Buttons" unique_id=2051845474]
+custom_minimum_size = Vector2(0, 92)
+layout_mode = 2
+theme_override_font_sizes/font_size = 38
+text = "Menu"

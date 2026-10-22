@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://b7j2k03jr6j64"]
+
+[ext_resource type="PackedScene" uid="uid://dklcrfsrwf5va" path="res://assets/nature/glTF/Fern_1.gltf" id="1_nkfef"]
+
+[node name="Fern" type="Node3D" unique_id=1964984140]
+
+[node name="Model" parent="." unique_id=2058836228 instance=ExtResource("1_nkfef")]

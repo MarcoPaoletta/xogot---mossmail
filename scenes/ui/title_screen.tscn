@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://cfhhs0sqqom5k"]
+
+[ext_resource type="Theme" uid="uid://cj786csk0wg1n" path="res://ui/mossmail_theme.tres" id="1_aqpy5"]
+[ext_resource type="Script" uid="uid://b8qqgfnurerw0" path="res://scripts/ui/title_screen.gd" id="1_eb34j"]
+[ext_resource type="FontVariation" path="res://ui/fredoka_bold.tres" id="3_w8uqo"]
+
+[node name="TitleScreen" type="Control" unique_id=329151715]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("1_aqpy5")
+script = ExtResource("1_eb34j")
+
+[node name="Center" type="MarginContainer" parent="." unique_id=1427232691]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme_override_constants/margin_left = 96
+theme_override_constants/margin_top = 60
+theme_override_constants/margin_bottom = 60
+
+[node name="Card" type="PanelContainer" parent="Center" unique_id=1689816302]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_type_variation = &"CardPanel"
+
+[node name="Margin" type="MarginContainer" parent="Center/Card" unique_id=1045329686]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Column" type="VBoxContainer" parent="Center/Card/Margin" unique_id=2097987327]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Title" type="Label" parent="Center/Card/Margin/Column" unique_id=1645891906]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8235294, 0.47843137, 1)
+theme_override_constants/outline_size = 18
+theme_override_fonts/font = ExtResource("3_w8uqo")
+theme_override_font_sizes/font_size = 128
+text = "MOSSMAIL"
+horizontal_alignment = 1
+
+[node name="Tagline" type="Label" parent="Center/Card/Margin/Column" unique_id=931912542]
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "The forest post takes to the sky"
+horizontal_alignment = 1
+
+[node name="HowTo" type="Label" parent="Center/Card/Margin/Column" unique_id=1812230372]
+modulate = Color(1, 1, 1, 0.85)
+custom_minimum_size = Vector2(720, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Hold the left or right side of the screen to steer your glider, or tilt your iPad. Catch leaf-letters, fly over mushroom homes to deliver, and ride glowing updrafts up through the sky rings."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="PlayButton" type="Button" parent="Center/Card/Margin/Column" unique_id=1203622096]
+custom_minimum_size = Vector2(0, 104)
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Start shift"
+
+[node name="TiltButton" type="Button" parent="Center/Card/Margin/Column" unique_id=447078693]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Tilt steering: ON"
+
+[node name="BestLabel" type="Label" parent="Center/Card/Margin/Column" unique_id=78297942]
+modulate = Color(1, 1, 1, 0.8)
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Your first shift awaits"
+horizontal_alignment = 1
+
+[node name="Credits" type="Label" parent="." unique_id=695698616]
+modulate = Color(1, 1, 1, 0.8)
+layout_mode = 0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -56.0
+offset_bottom = -18.0
+theme_override_font_sizes/font_size = 20
+text = "Hang glider by Poly by Google (CC-BY 3.0, poly.pizza/m/bIRUD686yoA)  ·  Nature by Quaternius (CC0)  ·  Textures by ambientCG (CC0)  ·  Font: Fredoka (OFL)"
+horizontal_alignment = 1

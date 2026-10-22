@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dnji8sve8dt81"]
+
+[ext_resource type="PackedScene" uid="uid://lsuqk2om5r4i" path="res://assets/nature/glTF/Bush_Common_Flowers.gltf" id="1_3wjbn"]
+
+[node name="BushFlowers" type="Node3D" unique_id=1938949339]
+
+[node name="Model" parent="." unique_id=1666290592 instance=ExtResource("1_3wjbn")]

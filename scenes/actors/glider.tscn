@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://cts3xqv0aln5l"]
+
+[ext_resource type="PackedScene" uid="uid://bhl7pc06uj0gi" path="res://assets/glider/hang_glider.glb" id="1_av1hh"]
+[ext_resource type="Script" uid="uid://4872xe2mqcnw" path="res://scripts/actors/glider.gd" id="1_tl1x0"]
+[ext_resource type="Material" path="res://materials/glider_unshaded.tres" id="2_fwojc"]
+[ext_resource type="Material" uid="uid://c1been3jjb0nl" path="res://materials/fx_petal.tres" id="3_fwojc"]
+[ext_resource type="QuadMesh" uid="uid://cxlx6eyh3a60g" path="res://materials/fx_quad.tres" id="4_45opd"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_v5f5h"]
+radius = 1.6
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_eylmo"]
+emission_shape = 1
+emission_sphere_radius = 0.15
+angle_max = 360.0
+direction = Vector3(0, 0, -1)
+spread = 12.0
+initial_velocity_min = 0.5
+initial_velocity_max = 1.5
+angular_velocity_min = -200.0
+angular_velocity_max = 200.0
+gravity = Vector3(0, -0.6, 0)
+damping_min = 0.4
+damping_max = 1.0
+scale_min = 0.14
+scale_max = 0.26
+color = Color(1, 0.84, 0.9, 1)
+hue_variation_min = -0.08
+hue_variation_max = 0.1
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4r4ts"]
+emission_shape = 1
+emission_sphere_radius = 0.15
+angle_max = 360.0
+direction = Vector3(0, 0, -1)
+spread = 12.0
+initial_velocity_min = 0.5
+initial_velocity_max = 1.5
+angular_velocity_min = -200.0
+angular_velocity_max = 200.0
+gravity = Vector3(0, -0.6, 0)
+damping_min = 0.4
+damping_max = 1.0
+scale_min = 0.14
+scale_max = 0.26
+color = Color(1, 0.84, 0.9, 1)
+hue_variation_min = -0.08
+hue_variation_max = 0.1
+
+[node name="Glider" type="CharacterBody3D" unique_id=532663225]
+collision_layer = 2
+motion_mode = 1
+script = ExtResource("1_tl1x0")
+cruise_height = 26
+model_material = ExtResource("2_fwojc")
+
+[node name="Shape" type="CollisionShape3D" parent="." unique_id=144391254]
+shape = SubResource("SphereShape3D_v5f5h")
+
+[node name="Visual" type="Node3D" parent="." unique_id=147370117]
+
+[node name="ModelPivot" type="Node3D" parent="Visual" unique_id=233073308]
+
+[node name="Model" parent="Visual/ModelPivot" unique_id=563689695 instance=ExtResource("1_av1hh")]
+transform = Transform3D(-6.993822e-10, 0, 0.016, 0, 0.016, 0, -0.016, 0, -6.993822e-10, -0.16, 0.35, 0.88)
+
+[node name="TrailLeft" type="GPUParticles3D" parent="Visual" unique_id=1988132858]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.3, -0.4)
+material_override = ExtResource("3_fwojc")
+cast_shadow = 0
+amount = 36
+lifetime = 1.6
+visibility_aabb = AABB(-20, -10, -20, 40, 20, 40)
+process_material = SubResource("ParticleProcessMaterial_eylmo")
+draw_pass_1 = ExtResource("4_45opd")
+
+[node name="TrailRight" type="GPUParticles3D" parent="Visual" unique_id=1645933996]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.3, -0.4)
+material_override = ExtResource("3_fwojc")
+cast_shadow = 0
+amount = 36
+lifetime = 1.6
+visibility_aabb = AABB(-20, -10, -20, 40, 20, 40)
+process_material = SubResource("ParticleProcessMaterial_4r4ts")
+draw_pass_1 = ExtResource("4_45opd")

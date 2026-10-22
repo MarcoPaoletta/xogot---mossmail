@@ -1,0 +1,72 @@
+[
+  {
+    "assets": "Trees, rocks and ground plants: Quaternius Ultimate Nature Pack. Courier: original simple character. No rigged animal assumed.",
+    "color": "#91e5ad",
+    "ground": "#355f54",
+    "hook": "Movement-first exploration with tiny stories, no combat, and a forest that lights up as you reconnect it.",
+    "id": "mossmail",
+    "loop": "Glide between giant trees, deliver lost letters, and restore a forgotten woodland postal route.",
+    "risk": "Low–medium: glide feel and clear navigation. Best first prototype.",
+    "sky": "#142c36",
+    "slice": "One grove · three delivery stops · one glider upgrade · 8–10 minutes.",
+    "tag": "A cozy forest delivery adventure",
+    "title": "MOSSMAIL",
+    "url": "https://quaternius.com/packs/ultimatenature.html"
+  },
+  {
+    "assets": "Ship parts, satellites and station modules: Quaternius Ultimate Space Kit. Tether and salvage tools: original geometry.",
+    "color": "#78d9ff",
+    "ground": "#263c59",
+    "hook": "Quiet space exploration with satisfying magnetic tools and short, risky salvage runs.",
+    "id": "drift",
+    "loop": "Tether to derelict satellites, pull out valuable modules, and return before your oxygen runs low.",
+    "risk": "Medium: constrain movement to a plane first; full six-axis flight is a later feature.",
+    "sky": "#0c172c",
+    "slice": "One wreck · three salvage objects · oxygen timer · return beacon.",
+    "tag": "A tactile orbital salvage game",
+    "title": "DRIFT / SALVAGE",
+    "url": "https://quaternius.com/packs/ultimatespace.html"
+  },
+  {
+    "assets": "Walls, pillars and doors: Quaternius Ultimate Dungeon Pack. Lantern, flame and light switches: original models/effects.",
+    "color": "#ffcc83",
+    "ground": "#4c4053",
+    "hook": "Your light is both your safety and the key. Spend it carefully, then earn it back.",
+    "id": "wick",
+    "loop": "Carry your fading lantern through an abandoned temple; share its flame with mechanisms to open the way.",
+    "risk": "Low–medium: strong atmosphere with a small asset set. Limit shadow-casting lights on iPad.",
+    "sky": "#201e32",
+    "slice": "Three rooms · two light puzzles · one exit · no enemies in the first build.",
+    "tag": "A lantern-powered dungeon puzzler",
+    "title": "LAST WICK",
+    "url": "https://quaternius.com/packs/ultimatedungeon.html"
+  },
+  {
+    "assets": "Palms, vegetation and rocks: Quaternius Ultimate Nature Pack. Boat, docks and beacons: original low-poly geometry.",
+    "color": "#a9eee6",
+    "ground": "#bdac7c",
+    "hook": "A readable, diorama-sized world changes visibly with every repair. No survival grind.",
+    "id": "tide",
+    "loop": "Sail a miniature lagoon, collect stranded supplies, and repair three beacons to bring the harbor back to life.",
+    "risk": "Medium: boat handling and transparent water. Start with flat opaque stylized water.",
+    "sky": "#163e53",
+    "slice": "One lagoon · three islands · one boat · three repairs.",
+    "tag": "A tiny island restoration adventure",
+    "title": "TIDELINE",
+    "url": "https://quaternius.com/packs/ultimatenature.html"
+  },
+  {
+    "assets": "Trees, rocks and foliage: Quaternius Ultimate Nature Pack. Platforms, marble and goals: original primitives.",
+    "color": "#d6c2ff",
+    "ground": "#696b9b",
+    "hook": "Toy-sized worlds, big shortcuts: a short skill game built around feel and replayable times.",
+    "id": "roll",
+    "loop": "Tilt and roll a marble across floating garden courses, collect stars, then find the finish portal.",
+    "risk": "Low: easiest full playable loop; camera and physics need careful tuning.",
+    "sky": "#24233d",
+    "slice": "One course · three checkpoints · five collectibles · instant reset.",
+    "tag": "A miniature mountain marble adventure",
+    "title": "POCKET PEAKS",
+    "url": "https://quaternius.com/packs/ultimatenature.html"
+  }
+]

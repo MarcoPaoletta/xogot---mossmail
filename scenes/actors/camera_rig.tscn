@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://ctkh4obnfjxvx"]
+
+[ext_resource type="Script" uid="uid://drhudlywpdcdq" path="res://scripts/actors/courier_camera.gd" id="1_fmorn"]
+
+[node name="CameraRig" type="Node3D" unique_id=901322864]
+script = ExtResource("1_fmorn")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=362160990]
+current = true
+fov = 62.0
+near = 0.15
+far = 220.0

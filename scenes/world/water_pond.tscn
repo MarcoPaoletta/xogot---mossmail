@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://d0vkcvmsr5gc7"]
+
+[ext_resource type="Script" uid="uid://brsul7wpd4tkl" path="res://scripts/world/water_zone.gd" id="1_whybn"]
+[ext_resource type="Material" uid="uid://cj4sgout0ebat" path="res://materials/pond_water.tres" id="2_exuoc"]
+[ext_resource type="PackedScene" uid="uid://bnbqsw5efulby" path="res://scenes/props/rock_medium_2.tscn" id="3_v0ijc"]
+[ext_resource type="PackedScene" uid="uid://do72h6nodfubw" path="res://scenes/props/grass_tall.tscn" id="4_alxa4"]
+[ext_resource type="PackedScene" uid="uid://b7j2k03jr6j64" path="res://scenes/props/fern.tscn" id="5_os6gp"]
+[ext_resource type="PackedScene" uid="uid://tv8xt3183i0t" path="res://scenes/props/grass_wispy.tscn" id="6_mwtwv"]
+[ext_resource type="PackedScene" uid="uid://bw7s2k8bcsaeu" path="res://scenes/props/rock_medium_1.tscn" id="7_ins71"]
+[ext_resource type="PackedScene" uid="uid://dggrgh2bkmpxw" path="res://scenes/props/plant_big.tscn" id="8_33g05"]
+[ext_resource type="PackedScene" uid="uid://cotpx26j2o4eu" path="res://scenes/props/flowers_4.tscn" id="9_vlc4p"]
+[ext_resource type="Material" uid="uid://7d0ksndj1qi2" path="res://materials/fx_soft.tres" id="10_x0i2r"]
+[ext_resource type="QuadMesh" uid="uid://cxlx6eyh3a60g" path="res://materials/fx_quad.tres" id="11_3ipfs"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_lmd1b"]
+height = 1.6
+radius = 6.2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_qrrid"]
+size = Vector2(16, 16)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3e322"]
+emission_shape = 1
+emission_sphere_radius = 0.5
+direction = Vector3(0, 1, 0)
+spread = 40.0
+initial_velocity_min = 3.0
+initial_velocity_max = 6.0
+gravity = Vector3(0, -14, 0)
+scale_min = 0.14
+scale_max = 0.3
+color = Color(0.85, 0.95, 0.95, 0.9)
+
+[node name="WaterPond" type="Area3D" unique_id=965725103]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_whybn")
+
+[node name="Shape" type="CollisionShape3D" parent="." unique_id=335249851]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+shape = SubResource("CylinderShape3D_lmd1b")
+
+[node name="Surface" type="MeshInstance3D" parent="." unique_id=809242680]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.06, 0)
+material_override = ExtResource("2_exuoc")
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_qrrid")
+
+[node name="Rim" type="Node3D" parent="." unique_id=937407213]
+
+[node name="Edge1" parent="Rim" unique_id=20615129 instance=ExtResource("3_v0ijc")]
+transform = Transform3D(0.6632301, 0, 0.44735432, 0, 0.8, 0, -0.44735432, 0, 0.6632301, 7.47, 0, 2.72)
+
+[node name="Edge2" parent="Rim" unique_id=1393464197 instance=ExtResource("4_alxa4")]
+transform = Transform3D(-0.07936301, 0, 1.2975752, 0, 1.3, 0, -1.2975752, 0, -0.07936301, 3.74, 0, 5.35)
+
+[node name="Edge3" parent="Rim" unique_id=1964984140 instance=ExtResource("5_os6gp")]
+transform = Transform3D(-0.3319133, 0, 0.111056626, 0, 0.35, 0, -0.111056626, 0, -0.3319133, -0.64, 0, 7.34)
+
+[node name="Edge4" parent="Rim" unique_id=1493501044 instance=ExtResource("6_mwtwv")]
+transform = Transform3D(-0.6359033, 0, -1.0176576, 0, 1.2, 0, 1.0176576, 0, -0.6359033, -5.76, 0, 4.83)
+
+[node name="Edge5" parent="Rim" unique_id=497148774 instance=ExtResource("7_ins71")]
+transform = Transform3D(0.49063644, 0, -0.49927536, 0, 0.7, 0, 0.49927536, 0, 0.49063644, -6.85, 0, -0.6)
+
+[node name="Edge6" parent="Rim" unique_id=1246208849 instance=ExtResource("8_33g05")]
+transform = Transform3D(0.7714506, 0, 0.46353427, 0, 0.9, 0, -0.46353427, 0, 0.7714506, -4.91, 0, -5.85)
+
+[node name="Edge7" parent="Rim" unique_id=825925369 instance=ExtResource("4_alxa4")]
+transform = Transform3D(-0.009599183, 0, 1.0999582, 0, 1.1, 0, -1.0999582, 0, -0.009599183, -0.64, 0, -7.28)
+
+[node name="Edge8" parent="Rim" unique_id=343021965 instance=ExtResource("9_vlc4p")]
+transform = Transform3D(-0.8660254, 0, 0.50000006, 0, 1, 0, -0.50000006, 0, -0.8660254, 3.39, 0, -5.87)
+
+[node name="Edge9" parent="Rim" unique_id=1687780039 instance=ExtResource("6_mwtwv")]
+transform = Transform3D(-1.1314623, 0, -0.64015067, 0, 1.3, 0, 0.64015067, 0, -1.1314623, 6.24, 0, -2.91)
+
+[node name="Splash" type="GPUParticles3D" parent="." unique_id=687068104]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+material_override = ExtResource("10_x0i2r")
+cast_shadow = 0
+emitting = false
+amount = 40
+lifetime = 0.9
+one_shot = true
+explosiveness = 1.0
+visibility_aabb = AABB(-8, -4, -8, 16, 16, 16)
+process_material = SubResource("ParticleProcessMaterial_3e322")
+draw_pass_1 = ExtResource("11_3ipfs")

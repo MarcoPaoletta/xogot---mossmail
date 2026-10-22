@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://ba2du53hwp3eo"]
+
+[ext_resource type="Shader" uid="uid://2u4lbu4j0l12" path="res://shaders/edge_glow.gdshader" id="1_w25gd"]
+
+[resource]
+shader = ExtResource("1_w25gd")
+shader_parameter/glow_color = Color(1, 0.86, 0.55, 1)
+shader_parameter/from_right = false
+shader_parameter/falloff = 1.6

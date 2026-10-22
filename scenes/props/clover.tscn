@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://m4ouwgitghq5"]
+
+[ext_resource type="PackedScene" uid="uid://c30f2mplviadu" path="res://assets/nature/glTF/Clover_1.gltf" id="1_udivm"]
+
+[node name="Clover" type="Node3D" unique_id=245330095]
+
+[node name="Model" parent="." unique_id=1975550425 instance=ExtResource("1_udivm")]

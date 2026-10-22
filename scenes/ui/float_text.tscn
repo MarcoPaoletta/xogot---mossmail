@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://daivlppu074w4"]
+
+[ext_resource type="Script" uid="uid://cdgpd8ktydv7p" path="res://scripts/ui/float_text.gd" id="1_uh2tq"]
+[ext_resource type="FontVariation" path="res://ui/fredoka_bold.tres" id="1_xilk8"]
+
+[node name="FloatText" type="Label" unique_id=528427842]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("1_xilk8")
+theme_override_font_sizes/font_size = 52
+horizontal_alignment = 1
+script = ExtResource("1_uh2tq")

@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://dfwgeas5nuhkc"]
+
+[ext_resource type="Script" uid="uid://c284rltp7d85l" path="res://scripts/gameplay/letter_pickup.gd" id="1_kgh7p"]
+[ext_resource type="PackedScene" uid="uid://de0wp1d8awoly" path="res://assets/nature/glTF/Petal_3.gltf" id="2_t8qad"]
+[ext_resource type="PackedScene" uid="uid://b7wlx58hx7eyr" path="res://assets/nature/glTF/Petal_1.gltf" id="3_p1bo6"]
+[ext_resource type="Material" uid="uid://bvwjfbqpe6lcm" path="res://materials/fx_soft_glow.tres" id="4_viy5g"]
+[ext_resource type="QuadMesh" uid="uid://cxlx6eyh3a60g" path="res://materials/fx_quad.tres" id="5_v587f"]
+[ext_resource type="Material" uid="uid://c1been3jjb0nl" path="res://materials/fx_petal.tres" id="6_23lud"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kgh7p"]
+radius = 4.2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_458jy"]
+emission_shape = 1
+emission_sphere_radius = 0.9
+direction = Vector3(0, 1, 0)
+spread = 30.0
+initial_velocity_min = 0.2
+initial_velocity_max = 0.7
+gravity = Vector3(0, 0.4, 0)
+scale_min = 0.08
+scale_max = 0.16
+color = Color(1, 0.92, 0.6, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8neyt"]
+emission_shape = 1
+emission_sphere_radius = 0.4
+angle_max = 360.0
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_min = 3.0
+initial_velocity_max = 6.5
+angular_velocity_min = -360.0
+angular_velocity_max = 360.0
+gravity = Vector3(0, -4, 0)
+damping_min = 2.0
+damping_max = 4.0
+scale_min = 0.16
+scale_max = 0.3
+color = Color(1, 0.86, 0.9, 1)
+hue_variation_min = -0.1
+hue_variation_max = 0.1
+
+[node name="LetterPickup" type="Area3D" unique_id=756683181]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_kgh7p")
+
+[node name="Shape" type="CollisionShape3D" parent="." unique_id=683318664]
+shape = SubResource("SphereShape3D_kgh7p")
+
+[node name="Visual" type="Node3D" parent="." unique_id=1473529488]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.2, 0)
+
+[node name="Leaf" parent="Visual" unique_id=166563794 instance=ExtResource("2_t8qad")]
+transform = Transform3D(1, 0, 0, 0, 0.4694716, 0.88294756, 0, -0.88294756, 0.4694716, 0, -0.05, 0)
+
+[node name="Seal" parent="Visual" unique_id=1950608971 instance=ExtResource("3_p1bo6")]
+transform = Transform3D(0.31819803, -0.2809522, 0.14938495, 0, 0.21126221, 0.39732638, -0.31819803, -0.2809522, 0.14938495, 0, 0.02, 0.06)
+
+[node name="Glow" type="OmniLight3D" parent="." unique_id=318111472]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+light_color = Color(1, 0.9, 0.66, 1)
+light_energy = 4.0
+omni_range = 9.0
+
+[node name="Sparkle" type="GPUParticles3D" parent="." unique_id=1106218755]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+material_override = ExtResource("4_viy5g")
+cast_shadow = 0
+amount = 14
+lifetime = 1.6
+visibility_aabb = AABB(-8, -4, -8, 16, 16, 16)
+process_material = SubResource("ParticleProcessMaterial_458jy")
+draw_pass_1 = ExtResource("5_v587f")
+
+[node name="Burst" type="GPUParticles3D" parent="." unique_id=385276527]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+material_override = ExtResource("6_23lud")
+cast_shadow = 0
+emitting = false
+amount = 36
+lifetime = 1.2
+one_shot = true
+explosiveness = 1.0
+visibility_aabb = AABB(-8, -4, -8, 16, 16, 16)
+process_material = SubResource("ParticleProcessMaterial_8neyt")
+draw_pass_1 = ExtResource("5_v587f")
