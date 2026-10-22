@@ -6,6 +6,9 @@
 [ext_resource type="Material" uid="uid://cqyd3k8na0xm0" path="res://materials/edge_glow_right.tres" id="4_h022r"]
 [ext_resource type="Script" uid="uid://cb1r8at0p8svp" path="res://scripts/ui/compass.gd" id="5_4jqwt"]
 [ext_resource type="FontVariation" path="res://ui/fredoka_bold.tres" id="5_oj5la"]
+[ext_resource type="Script" uid="uid://bkxp8hhxlqipn" path="res://scripts/ui/heart_icon.gd" id="6_4jqwt"]
+[ext_resource type="PackedScene" uid="uid://bhsiwwoaoarqr" path="res://scenes/ui/flower_icon_view.tscn" id="7_kicr4"]
+[ext_resource type="Script" uid="uid://depd6ab4nxqp0" path="res://scripts/ui/altitude_lever.gd" id="9_mj13f"]
 
 [node name="Hud" type="Control" unique_id=1406425763]
 layout_mode = 3
@@ -66,12 +69,12 @@ layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.8235294, 0.47843137, 1)
 theme_override_fonts/font = ExtResource("5_oj5la")
 theme_override_font_sizes/font_size = 36
-text = "Mail for Old Moss"
+text = "Collect 5 flowers"
 
 [node name="TaskDetail" type="Label" parent="TopBar/Row/TaskCard/TaskColumn" unique_id=424835113]
 layout_mode = 2
 theme_override_font_sizes/font_size = 27
-text = "Grab the leaf-letter"
+text = "5 left"
 
 [node name="TimerBar" type="ProgressBar" parent="TopBar/Row/TaskCard/TaskColumn" unique_id=609057678]
 self_modulate = Color(0.953, 0.906, 0.769, 1)
@@ -86,62 +89,64 @@ layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="Stamps" type="HBoxContainer" parent="TopBar/Row" unique_id=608442438]
+[node name="Hearts" type="HBoxContainer" parent="TopBar/Row" unique_id=1851599148]
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 6
 
-[node name="Stamp1" type="Panel" parent="TopBar/Row/Stamps" unique_id=1014160207]
-custom_minimum_size = Vector2(48, 56)
+[node name="Heart1" type="Control" parent="TopBar/Row/Hearts" unique_id=1377741752]
+custom_minimum_size = Vector2(104, 98)
 layout_mode = 2
 mouse_filter = 2
-theme_type_variation = &"StampPanel"
+script = ExtResource("6_4jqwt")
 
-[node name="Stamp2" type="Panel" parent="TopBar/Row/Stamps" unique_id=800633078]
-custom_minimum_size = Vector2(48, 56)
+[node name="Heart2" type="Control" parent="TopBar/Row/Hearts" unique_id=1653260422]
+custom_minimum_size = Vector2(104, 98)
 layout_mode = 2
 mouse_filter = 2
-theme_type_variation = &"StampPanel"
+script = ExtResource("6_4jqwt")
 
-[node name="Stamp3" type="Panel" parent="TopBar/Row/Stamps" unique_id=767264808]
-custom_minimum_size = Vector2(48, 56)
+[node name="Heart3" type="Control" parent="TopBar/Row/Hearts" unique_id=957456793]
+custom_minimum_size = Vector2(104, 98)
 layout_mode = 2
 mouse_filter = 2
-theme_type_variation = &"StampPanel"
+script = ExtResource("6_4jqwt")
 
-[node name="ScoreCard" type="PanelContainer" parent="TopBar/Row" unique_id=136586400]
-custom_minimum_size = Vector2(220, 0)
+[node name="CounterCard" type="PanelContainer" parent="TopBar/Row" unique_id=963426155]
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
 
-[node name="ScoreColumn" type="VBoxContainer" parent="TopBar/Row/ScoreCard" unique_id=1869360720]
+[node name="CounterRow" type="HBoxContainer" parent="TopBar/Row/CounterCard" unique_id=852304790]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 0
+theme_override_constants/separation = 10
+alignment = 1
 
-[node name="ScoreLabel" type="Label" parent="TopBar/Row/ScoreCard/ScoreColumn" unique_id=1912655940]
+[node name="FlowerIcon" type="SubViewportContainer" parent="TopBar/Row/CounterCard/CounterRow" unique_id=2014824366]
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+mouse_filter = 2
+stretch = true
+
+[node name="Viewport" type="SubViewport" parent="TopBar/Row/CounterCard/CounterRow/FlowerIcon" unique_id=1201668268]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+msaa_3d = 2
+size = Vector2i(72, 72)
+render_target_update_mode = 4
+
+[node name="FlowerIconView" parent="TopBar/Row/CounterCard/CounterRow/FlowerIcon/Viewport" unique_id=1460937231 instance=ExtResource("7_kicr4")]
+
+[node name="CountLabel" type="Label" parent="TopBar/Row/CounterCard/CounterRow" unique_id=1973158788]
+custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_oj5la")
 theme_override_font_sizes/font_size = 54
 text = "0"
-horizontal_alignment = 2
-
-[node name="ComboLabel" type="Label" parent="TopBar/Row/ScoreCard/ScoreColumn" unique_id=1925421365]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.8235294, 0.47843137, 1)
-theme_override_font_sizes/font_size = 26
-text = "Combo x2"
-horizontal_alignment = 2
-
-[node name="PauseButton" type="Button" parent="TopBar/Row" unique_id=657483994]
-custom_minimum_size = Vector2(96, 96)
-layout_mode = 2
-size_flags_vertical = 0
-focus_mode = 0
-theme_override_font_sizes/font_size = 34
-text = "II"
+vertical_alignment = 1
 
 [node name="Compass" type="Control" parent="." unique_id=61070903]
 custom_minimum_size = Vector2(112, 112)
@@ -185,7 +190,7 @@ theme_override_colors/font_color = Color(1, 0.8235294, 0.47843137, 1)
 theme_override_constants/outline_size = 16
 theme_override_fonts/font = ExtResource("5_oj5la")
 theme_override_font_sizes/font_size = 96
-text = "Delivered!"
+text = "All collected!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -197,5 +202,18 @@ anchor_bottom = 1.0
 offset_top = -120.0
 offset_bottom = -60.0
 theme_override_font_sizes/font_size = 32
-text = "Hold left or right to steer  ·  or tilt your iPad"
+text = "Hold left or right to steer  ·  slide the lever or tilt to fly higher or lower"
 horizontal_alignment = 1
+
+[node name="AltitudeLever" type="Control" parent="." unique_id=1650895377]
+anchors_preset = 0
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -214.0
+offset_top = -630.0
+offset_right = -60.0
+offset_bottom = -70.0
+mouse_filter = 2
+script = ExtResource("9_mj13f")

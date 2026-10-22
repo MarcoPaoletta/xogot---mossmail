@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://g52ifopgwl1c"]
+
+[ext_resource type="Script" uid="uid://ikcsgj13tt00" path="res://scripts/actors/glider_showcase.gd" id="1_l3m83"]
+[ext_resource type="Material" path="res://materials/glider_tint.tres" id="2_ctf7d"]
+[ext_resource type="PackedScene" uid="uid://bhl7pc06uj0gi" path="res://assets/glider/hang_glider.glb" id="2_o2e6b"]
+
+[node name="GliderShowcase" type="Node3D" unique_id=1614080219]
+script = ExtResource("1_l3m83")
+model_material = ExtResource("2_ctf7d")
+
+[node name="Pivot" type="Node3D" parent="." unique_id=1418281949]
+transform = Transform3D(0.81915206, 0, 0.57357645, 0, 1, 0, -0.57357645, 0, 0.81915206, 0, 0, 0)
+
+[node name="ModelPivot" type="Node3D" parent="Pivot" unique_id=2000527871]
+
+[node name="Model" parent="Pivot/ModelPivot" unique_id=563689695 instance=ExtResource("2_o2e6b")]
+transform = Transform3D(-6.993822e-10, 0, 0.016, 0, 0.016, 0, -0.016, 0, -6.993822e-10, -0.16, 0.35, 0.88)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=2014209870]
+transform = Transform3D(1, 0, 0, 0, 0.98480767, 0.17364816, 0, -0.17364816, 0.98480767, 0, 1.25, 6)
+current = true
+fov = 42.0

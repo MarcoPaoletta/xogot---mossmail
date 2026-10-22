@@ -21,8 +21,15 @@ extends Node3D
 @export_group("Field of view")
 @export var base_fov: float = 66.0
 @export var fov_per_speed: float = 1.1
-@export var updraft_fov: float = 6.0
+@export var boost_fov: float = 10.0
 @export var fov_smoothing: float = 3.0
+
+@export_group("Framing")
+## Sideways lens shift in flight (metres). 0 keeps the glider centred.
+@export var frame_offset: float = 0.0
+## Sideways lens shift on menus. Negative puts the glider on the right side of
+## the screen, clear of the menu cards on the left.
+@export var menu_frame_offset: float = -3.4
 
 @export_group("Shake")
 ## Shake offset in metres at full trauma (kept large enough to survive video).
@@ -56,6 +63,10 @@ var _time: float = 0.0
 
 func _ready() -> void:
 	top_level = true
+	# The rig is placed every rendered frame from the glider's interpolated
+	# transform. Letting physics interpolation also smooth it between physics
+	# ticks fights that placement and stutters, most visibly while climbing.
+	physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
 	_target = get_node_or_null(target_path) as Glider
 	_camera = get_node_or_null(camera_path) as Camera3D
 	if _target:
@@ -109,15 +120,16 @@ func _process(delta: float) -> void:
 	rotate_object_local(Vector3.FORWARD, _roll)
 
 	var fov_target: float = base_fov + maxf(_target.get_speed() - _target.cruise_speed, 0.0) * fov_per_speed
-	if _target.is_in_updraft():
-		fov_target += updraft_fov
+	if _target.is_boosting():
+		fov_target += boost_fov
 	fov_target = lerpf(fov_target, base_fov - 6.0, _mode_blend)
 	_camera.fov = lerpf(_camera.fov, fov_target + _fov_punch, 1.0 - exp(-fov_smoothing * delta))
 	_fov_punch = lerpf(_fov_punch, 0.0, 1.0 - exp(-5.0 * delta))
 
 	_trauma = maxf(_trauma - shake_decay * delta, 0.0)
 	var shake: float = _trauma * _trauma * max_shake_offset
-	_camera.h_offset = (sin(_time * 41.0) + sin(_time * 23.7) * 0.6) * 0.62 * shake
+	var frame: float = lerpf(frame_offset, menu_frame_offset, _mode_blend)
+	_camera.h_offset = frame + (sin(_time * 41.0) + sin(_time * 23.7) * 0.6) * 0.62 * shake
 	_camera.v_offset = (sin(_time * 37.3 + 1.7) + sin(_time * 19.1) * 0.6) * 0.62 * shake
 
 

@@ -57,3 +57,27 @@ Spawn pops (TRANS_BACK), letter bursts, home squash + confetti + window flare, p
 - **Obstacles:** giant twisted trees have 24 m (scaled) colliders; hitting one staggers and deflects the glider.
 - **Terrain:** `TerrainField` and `forest_ground.gdshader` share one sine-stack height function, about −26 to +26 m. Homes, ponds and mushrooms register flat zones, which go to the shader as a uniform array (up to 32).
 - **Hidden world edge:** a 5×5 chunk ring (grass and plants only in the inner 3×3), plus `mountain_ring.tscn`: three rows of scaled rock ridges at 178, 212 and 238 m that follow the glider. With fog at 0.0062, the horizon is always mountains.
+
+## Version 3 (2026-10-22): collect, customise, control the altitude
+Supersedes the v2 task and UI sections where they differ.
+
+- **Goal:** collect flowers. There is no delivery anymore.
+  - **Waves:** 5 flowers at first, plus 1 every 2 waves, up to 9. They sit 20 m apart along a curving path, at 6–55 m above the ground and inside the lever range.
+  - **Timer:** (path length / speed × 1.8) + 8 s. Missing a wave costs a heart; there are 3 hearts.
+  - **Ramp:** speed climbs over 10 waves.
+- **Real contact:** a pickup counts only when its sphere touches the glider's wing box (6.2 × 1.4 × 2.4 m, area layer 16). Flying 6 m above a flower does not collect it.
+- **Clear of trees:** flowers are moved sideways or above any canopy (per-prefix canopy radius and top × prop scale, plus a 2 m margin). Speed clovers lift themselves above canopies too.
+- **Visibility:** each flower has a rim-glow overlay, a fog-free soft halo (5.5 m), a light and sparkles.
+- **Speed boost:** golden four-leaf clovers (Quaternius Clover_1) hover 10–40 m over clearings in the pines and meadow chunks. Touching one gives 4 s of super speed (×1.75), with a golden trail, speed lines and a FOV kick. Updrafts and sky rings are removed.
+- **Altitude:** a lever in the bottom-right corner sets the height above the ground (0 = 6 m, 1 = 55 m). Tilting the iPad's top edge toward you raises it, away lowers it (0.55 lever per second at full tilt). W/S or ↑/↓ also work. Left/right steering is unchanged.
+- **Flow:** title (MOSSMAIL + Start) → glider selection (spinning glider on the left, 5 colour squares, Play on the right) → flight → results (flowers collected, best, Fly again, Menu). There is no pause menu.
+- **Glider colours:** sky blue (default), ember red, moss green, sun gold and dusk violet, made by a hue swap on the sail texture. The choice is saved.
+- **HUD:**
+  - **Top left:** the wave card ("Collect N flowers", "N left", timer bar).
+  - **Top right:** three vector hearts and a green flower counter with a live render of the flower model.
+  - **Centre:** a compass showing distance and ▲▼ for the height difference.
+  - **Framing:** in flight the glider is centred. On the menus the camera lens shifts so the glider sits on the right, clear of the menu cards.
+- **Device:** landscape is locked (orientation 0).
+- **Quality:**
+  - **LOD off:** trees appear whole, with no gradual leaf pop-in.
+  - **Rendering:** 3D scale 0.85, MSAA 2×, shadow atlas 4096, soft shadows medium, shadow distance 90 m, debanding.

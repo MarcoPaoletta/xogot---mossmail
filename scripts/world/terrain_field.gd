@@ -1,8 +1,9 @@
+@tool
 class_name TerrainField
 extends Node
 ## Endless rolling hills shared by the ground shader and gameplay.
 ## [method height_at] mirrors forest_ground.gdshader exactly (same sine stack).
-## Features (homes, ponds, updraft mushrooms) register flat zones so they sit on
+## Features (homes, ponds) register flat zones so they sit on
 ## level ground; the zones are pushed to the shader as a uniform array.
 
 const MAX_ZONES: int = 32

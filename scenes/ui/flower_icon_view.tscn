@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bhsiwwoaoarqr"]
+
+[ext_resource type="PackedScene" uid="uid://de0wp1d8awoly" path="res://assets/nature/glTF/Petal_3.gltf" id="1_0gaoj"]
+[ext_resource type="PackedScene" uid="uid://b7wlx58hx7eyr" path="res://assets/nature/glTF/Petal_1.gltf" id="2_ruod7"]
+
+[node name="FlowerIconView" type="Node3D" unique_id=1460937231]
+
+[node name="Flower" parent="." unique_id=166563794 instance=ExtResource("1_0gaoj")]
+transform = Transform3D(0.9396926, -0.3213938, 0.11697777, 0, 0.34202015, 0.9396926, -0.34202012, -0.8830222, 0.32139382, 0, 0, 0)
+
+[node name="Center" parent="." unique_id=1950608971 instance=ExtResource("2_ruod7")]
+transform = Transform3D(0.1901782, -0.38324285, 0.13948898, 0, 0.15390907, 0.42286167, -0.4078385, -0.17870905, 0.06504478, 0, 0.03, 0.05)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1143965759]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 1.05)
+current = true
+fov = 38.0
+
+[node name="Key" type="DirectionalLight3D" parent="." unique_id=969697732]
+transform = Transform3D(0.90630776, -0.24240388, 0.34618863, 0, 0.81915206, 0.57357645, -0.42261827, -0.5198368, 0.74240386, 0, 0, 0)
+light_energy = 1.6
+
+[node name="Fill" type="OmniLight3D" parent="." unique_id=1563802476]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0.9)
+light_color = Color(1, 0.85, 0.7, 1)
+light_energy = 1.5

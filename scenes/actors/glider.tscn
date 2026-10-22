@@ -2,9 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://bhl7pc06uj0gi" path="res://assets/glider/hang_glider.glb" id="1_av1hh"]
 [ext_resource type="Script" uid="uid://4872xe2mqcnw" path="res://scripts/actors/glider.gd" id="1_tl1x0"]
-[ext_resource type="Material" path="res://materials/glider_unshaded.tres" id="2_fwojc"]
+[ext_resource type="Material" path="res://materials/glider_tint.tres" id="2_45opd"]
 [ext_resource type="Material" uid="uid://c1been3jjb0nl" path="res://materials/fx_petal.tres" id="3_fwojc"]
 [ext_resource type="QuadMesh" uid="uid://cxlx6eyh3a60g" path="res://materials/fx_quad.tres" id="4_45opd"]
+[ext_resource type="Material" uid="uid://bvwjfbqpe6lcm" path="res://materials/fx_soft_glow.tres" id="6_eylmo"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_v5f5h"]
 radius = 1.6
@@ -47,12 +48,28 @@ color = Color(1, 0.84, 0.9, 1)
 hue_variation_min = -0.08
 hue_variation_max = 0.1
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_4r4ts"]
+size = Vector3(6.2, 1.4, 2.4)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_21r40"]
+emission_shape = 3
+emission_box_extents = Vector3(2.8, 0.2, 0.3)
+direction = Vector3(0, 0, -1)
+spread = 5.0
+initial_velocity_min = 6.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, 0, 0)
+damping_min = 4.0
+damping_max = 8.0
+scale_min = 0.12
+scale_max = 0.24
+color = Color(1, 0.82, 0.35, 1)
+
 [node name="Glider" type="CharacterBody3D" unique_id=532663225]
 collision_layer = 2
 motion_mode = 1
 script = ExtResource("1_tl1x0")
-cruise_height = 26
-model_material = ExtResource("2_fwojc")
+model_material = ExtResource("2_45opd")
 
 [node name="Shape" type="CollisionShape3D" parent="." unique_id=144391254]
 shape = SubResource("SphereShape3D_v5f5h")
@@ -82,4 +99,23 @@ amount = 36
 lifetime = 1.6
 visibility_aabb = AABB(-20, -10, -20, 40, 20, 40)
 process_material = SubResource("ParticleProcessMaterial_4r4ts")
+draw_pass_1 = ExtResource("4_45opd")
+
+[node name="Collector" type="Area3D" parent="Visual" unique_id=826400171]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+
+[node name="WingShape" type="CollisionShape3D" parent="Visual/Collector" unique_id=918238609]
+shape = SubResource("BoxShape3D_4r4ts")
+
+[node name="BoostTrail" type="GPUParticles3D" parent="Visual" unique_id=174782175]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -0.8)
+material_override = ExtResource("6_eylmo")
+cast_shadow = 0
+emitting = false
+amount = 70
+lifetime = 0.7
+visibility_aabb = AABB(-20, -10, -20, 40, 20, 40)
+process_material = SubResource("ParticleProcessMaterial_21r40")
 draw_pass_1 = ExtResource("4_45opd")

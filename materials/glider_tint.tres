@@ -1,0 +1,12 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://shaders/glider_tint.gdshader" id="1_shader"]
+[ext_resource type="Texture2D" path="res://assets/glider/hang_glider_hang_gliderSurface_Color.png" id="2_tex"]
+
+[resource]
+shader = ExtResource("1_shader")
+shader_parameter/albedo_tex = ExtResource("2_tex")
+shader_parameter/target_hue = -1.0
+shader_parameter/min_saturation = 0.25
+shader_parameter/brightness = 1.0
+shader_parameter/top_light = 0.18

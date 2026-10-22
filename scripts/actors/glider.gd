@@ -1,31 +1,38 @@
 class_name Glider
 extends CharacterBody3D
-## The Mossmail hang glider. Always flying: the player only steers left or right
-## (the glider banks into turns). It holds a cruise height above the rolling
-## hills, rides updrafts from shelf mushrooms high into the sky, and staggers
-## when it clips a giant tree. The body never rotates; [member heading] drives
-## the Visual node.
+## The Mossmail hang glider. Always flying. The player steers left/right (the
+## glider banks) and sets the altitude with the lever or by tilting the iPad
+## ([member altitude_input], 0..1 between min and max height above the ground).
+## Golden clovers give a burst of super speed. Giant trees stagger it.
+## Pickups count only when they touch the wing (Visual/Collector area).
+## The body never rotates; [member heading] drives the Visual node.
 
 signal bumped(strength: float)
-signal launched
+signal boost_started
+signal boost_ended
 
 @export_group("Flight")
 @export var cruise_speed: float = 13.0
-@export var max_speed: float = 19.0
+@export var max_speed: float = 18.0
 @export var menu_speed: float = 9.0
-@export var acceleration: float = 1.5
+@export var acceleration: float = 1.6
 @export var turn_rate_deg: float = 72.0
-## Height kept above the ground under and ahead of the glider (metres).
-@export var cruise_height: float = 22.0
-@export var height_response: float = 1.4
-@export var climb_rate: float = 7.0
-@export var sink_rate: float = 4.5
 @export var terrain_lookahead: float = 14.0
-## Extra height an updraft adds, how long it holds, and how fast it fades.
-@export var updraft_height: float = 22.0
-@export var updraft_hold: float = 3.5
-@export var updraft_decay: float = 3.0
-@export var min_clearance: float = 4.0
+@export var min_clearance: float = 3.0
+
+@export_group("Altitude")
+## Height above the ground at lever 0 and at lever 1.
+@export var min_height: float = 6.0
+@export var max_height: float = 55.0
+## Lever position used on menus and at the start of a flight.
+@export_range(0.0, 1.0) var default_altitude: float = 0.4
+@export var height_response: float = 1.6
+@export var climb_rate: float = 9.0
+@export var sink_rate: float = 8.0
+
+@export_group("Super speed")
+@export var boost_multiplier: float = 1.75
+@export var boost_time: float = 4.0
 
 @export_group("Bumps")
 @export var bump_cooldown: float = 0.8
@@ -34,26 +41,29 @@ signal launched
 
 @export_group("Look")
 @export var max_bank_deg: float = 38.0
-@export var pitch_per_climb_deg: float = 2.5
+@export var pitch_per_climb_deg: float = 2.2
 @export var bob_amount: float = 0.25
 @export var bob_speed: float = 1.3
 @export var visual_response: float = 5.0
-## Gentle circle flown on the title and results screens (-1..1).
+## Gentle circle flown on menus (-1..1).
 @export var menu_steer: float = 0.28
-
-## Replaces the downloaded glider's material. The model ships without normals,
-## so an unshaded material with its own texture is the safe way to draw it.
-@export var model_material: Material
+## Material for the downloaded glider (glider_tint.gdshader). Duplicated per
+## glider so its colour can change.
+@export var model_material: ShaderMaterial
 
 @export_group("Nodes")
 @export var visual_path: NodePath = ^"Visual"
 @export var model_root_path: NodePath = ^"Visual/ModelPivot"
+@export var collector_path: NodePath = ^"Visual/Collector"
 @export var trail_paths: Array[NodePath] = [^"Visual/TrailLeft", ^"Visual/TrailRight"]
+@export var boost_trail_path: NodePath = ^"Visual/BoostTrail"
 
 ## Heading in radians; 0 flies toward +Z.
 var heading: float = 0.0
 ## Steering in [-1, 1], positive turns right. Written by the game every frame.
 var steer: float = 0.0
+## Lever position 0..1 (min_height..max_height above ground).
+var altitude_input: float = 0.4
 ## False on menus: the glider circles slowly on its own.
 var active: bool = false
 ## 0..1 difficulty ramp toward [member max_speed].
@@ -61,10 +71,11 @@ var speed_bonus: float = 0.0
 
 var _terrain: TerrainField
 var _visual: Node3D
+var _material: ShaderMaterial
 var _trails: Array[GPUParticles3D] = []
+var _boost_trail: GPUParticles3D
 var _speed: float = 0.0
-var _extra_height: float = 0.0
-var _hold_left: float = 0.0
+var _boost_left: float = 0.0
 var _bump_left: float = 0.0
 var _stumble_left: float = 0.0
 var _bank: float = 0.0
@@ -76,6 +87,7 @@ var _vertical_speed: float = 0.0
 
 func _ready() -> void:
 	rotation = Vector3.ZERO
+	altitude_input = default_altitude
 	_visual = get_node_or_null(visual_path) as Node3D
 	if _visual:
 		_visual_base = _visual.position
@@ -84,11 +96,20 @@ func _ready() -> void:
 		var trail := get_node_or_null(path) as GPUParticles3D
 		if trail:
 			_trails.append(trail)
+	_boost_trail = get_node_or_null(boost_trail_path) as GPUParticles3D
+	if _boost_trail:
+		_boost_trail.emitting = false
+	var collector := get_node_or_null(collector_path)
+	if collector:
+		collector.add_to_group(&"glider_collector")
 	_speed = menu_speed
-	var model_root := get_node_or_null(model_root_path)
-	if model_root and model_material:
-		for node: Node in model_root.find_children("*", "MeshInstance3D", true, false):
-			(node as MeshInstance3D).material_override = model_material
+	if model_material:
+		_material = model_material.duplicate() as ShaderMaterial
+		var model_root := get_node_or_null(model_root_path)
+		if model_root:
+			for node: Node in model_root.find_children("*", "MeshInstance3D", true, false):
+				(node as MeshInstance3D).material_override = _material
+	set_color_index(GliderPalette.load_index())
 
 
 func _physics_process(delta: float) -> void:
@@ -97,22 +118,27 @@ func _physics_process(delta: float) -> void:
 	_time += delta
 	_bump_left = maxf(_bump_left - delta, 0.0)
 	_stumble_left = maxf(_stumble_left - delta, 0.0)
+	if _boost_left > 0.0:
+		_boost_left -= delta
+		if _boost_left <= 0.0:
+			if _boost_trail:
+				_boost_trail.emitting = false
+			boost_ended.emit()
 
 	var target_speed: float = lerpf(cruise_speed, max_speed, speed_bonus) if active else menu_speed
+	if _boost_left > 0.0:
+		target_speed *= boost_multiplier
 	if _stumble_left > 0.0:
 		target_speed *= stumble_speed_factor
-	_speed = lerpf(_speed, target_speed, 1.0 - exp(-acceleration * delta))
+	var accel: float = acceleration * (3.0 if _boost_left > 0.0 else 1.0)
+	_speed = lerpf(_speed, target_speed, 1.0 - exp(-accel * delta))
 
 	var steer_now: float = steer if active else menu_steer
 	heading = wrapf(heading - steer_now * deg_to_rad(turn_rate_deg) * delta, -PI, PI)
 	var forward: Vector3 = get_forward()
 
-	if _hold_left > 0.0:
-		_hold_left -= delta
-	else:
-		_extra_height = maxf(_extra_height - updraft_decay * delta, 0.0)
-	var ground: float = get_ground_height()
-	var target_y: float = ground + cruise_height + _extra_height
+	var lever: float = altitude_input if active else default_altitude
+	var target_y: float = get_ground_height() + lerpf(min_height, max_height, lever)
 	_vertical_speed = clampf((target_y - global_position.y) * height_response, -sink_rate, climb_rate)
 
 	velocity = forward * _speed + Vector3.UP * _vertical_speed
@@ -138,17 +164,8 @@ func get_vertical_speed() -> float:
 	return _vertical_speed
 
 
-func is_gliding() -> bool:
-	return true
-
-
-func is_airborne() -> bool:
-	return true
-
-
-## True while an updraft is still lifting or holding the glider.
-func is_in_updraft() -> bool:
-	return _extra_height > 1.0
+func is_boosting() -> bool:
+	return _boost_left > 0.0
 
 
 ## Highest ground under or just ahead of the glider (it climbs early for hills).
@@ -165,23 +182,34 @@ func get_altitude() -> float:
 	return global_position.y - _ground_below()
 
 
-## Updraft: lifts the glider by [param extra] metres above cruise.
-func launch(extra: float = -1.0) -> void:
-	_extra_height = maxf(_extra_height, updraft_height if extra <= 0.0 else extra)
-	_hold_left = updraft_hold
-	launched.emit()
+## Height above ground the lever currently asks for.
+func get_target_height() -> float:
+	return lerpf(min_height, max_height, altitude_input)
 
 
-## Places the glider at cruise height over [param world_position].
+## Super speed for [param duration] seconds (glider default when <= 0).
+func boost(duration: float = -1.0) -> void:
+	_boost_left = maxf(_boost_left, boost_time if duration <= 0.0 else duration)
+	if _boost_trail:
+		_boost_trail.emitting = true
+	boost_started.emit()
+
+
+## Recolours the sail (index into GliderPalette).
+func set_color_index(index: int) -> void:
+	GliderPalette.apply(_material, index)
+
+
+## Places the glider at the default height over [param world_position].
 func reset_to(world_position: Vector3, new_heading: float) -> void:
 	var p: Vector3 = world_position
 	if _terrain:
-		p.y = _terrain.height_at(p.x, p.z) + cruise_height
+		p.y = _terrain.height_at(p.x, p.z) + lerpf(min_height, max_height, default_altitude)
 	global_position = p
 	velocity = Vector3.ZERO
 	heading = new_heading
-	_extra_height = 0.0
-	_hold_left = 0.0
+	altitude_input = default_altitude
+	_boost_left = 0.0
 	_update_visual(1.0, 0.0)
 	reset_physics_interpolation()
 
@@ -221,7 +249,9 @@ func _update_visual(delta: float, steer_now: float) -> void:
 		trail.emitting = true
 	if _visual == null:
 		return
-	var wobble: float = sin(_time * 22.0) * 0.18 * (_stumble_left / stumble_time) if stumble_time > 0.0 else 0.0
+	var wobble: float = 0.0
+	if stumble_time > 0.0:
+		wobble = sin(_time * 22.0) * 0.18 * (_stumble_left / stumble_time)
 	var bank_target: float = deg_to_rad(max_bank_deg) * steer_now + wobble
 	var pitch_target: float = -deg_to_rad(pitch_per_climb_deg) * _vertical_speed
 	var k: float = 1.0 - exp(-visual_response * delta)

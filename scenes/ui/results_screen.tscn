@@ -44,7 +44,7 @@ alignment = 1
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_dqiy6")
 theme_override_font_sizes/font_size = 64
-text = "Shift complete"
+text = "Flight complete"
 horizontal_alignment = 1
 
 [node name="ScoreLabel" type="Label" parent="Center/Card/Margin/Column" unique_id=1448340307]
@@ -56,16 +56,16 @@ theme_override_font_sizes/font_size = 128
 text = "0"
 horizontal_alignment = 1
 
-[node name="DeliveriesLabel" type="Label" parent="Center/Card/Margin/Column" unique_id=1737912022]
+[node name="CaptionLabel" type="Label" parent="Center/Card/Margin/Column" unique_id=1737912022]
 layout_mode = 2
 theme_override_font_sizes/font_size = 34
-text = "0 deliveries"
+text = "flowers collected"
 horizontal_alignment = 1
 
 [node name="BestLabel" type="Label" parent="Center/Card/Margin/Column" unique_id=1335483713]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
-text = "Best shift: 0"
+text = "Best: 0 flowers"
 horizontal_alignment = 1
 
 [node name="Buttons" type="HBoxContainer" parent="Center/Card/Margin/Column" unique_id=197496630]
@@ -77,7 +77,7 @@ alignment = 1
 custom_minimum_size = Vector2(0, 92)
 layout_mode = 2
 theme_override_font_sizes/font_size = 38
-text = "Another shift"
+text = "Fly again"
 
 [node name="MenuButton" type="Button" parent="Center/Card/Margin/Column/Buttons" unique_id=2051845474]
 custom_minimum_size = Vector2(0, 92)

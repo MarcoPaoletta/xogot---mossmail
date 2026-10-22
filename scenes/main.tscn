@@ -14,15 +14,15 @@
 [ext_resource type="PackedScene" uid="uid://baitubsogmwbt" path="res://scenes/ui/hud.tscn" id="10_jscy8"]
 [ext_resource type="PackedScene" uid="uid://cfhhs0sqqom5k" path="res://scenes/ui/title_screen.tscn" id="11_pm3ni"]
 [ext_resource type="Script" uid="uid://bqod4m7wkn8jj" path="res://scripts/input/steer_input.gd" id="12_og1vs"]
-[ext_resource type="PackedScene" uid="uid://bwgqd5e2m51ty" path="res://scenes/ui/pause_screen.tscn" id="12_y6deb"]
-[ext_resource type="Script" uid="uid://bmq8mg67n8env" path="res://scripts/gameplay/delivery_director.gd" id="13_2wyq8"]
 [ext_resource type="PackedScene" uid="uid://cg5efugtd3ral" path="res://scenes/ui/results_screen.tscn" id="13_og1vs"]
+[ext_resource type="PackedScene" uid="uid://df1ldk2obuebs" path="res://scenes/ui/customize_screen.tscn" id="16_pm3ni"]
 [ext_resource type="Material" uid="uid://bvwjfbqpe6lcm" path="res://materials/fx_soft_glow.tres" id="19_vxglm"]
 [ext_resource type="QuadMesh" uid="uid://cxlx6eyh3a60g" path="res://materials/fx_quad.tres" id="20_2f3dj"]
 [ext_resource type="Script" uid="uid://dpxvc8l1dma8j" path="res://scripts/world/terrain_field.gd" id="21_pm3ni"]
 [ext_resource type="Material" uid="uid://c1been3jjb0nl" path="res://materials/fx_petal.tres" id="21_yq6so"]
 [ext_resource type="PackedScene" uid="uid://cts3xqv0aln5l" path="res://scenes/actors/glider.tscn" id="22_y6deb"]
 [ext_resource type="PackedScene" uid="uid://78plky63vq00" path="res://scenes/world/mountain_ring.tscn" id="23_og1vs"]
+[ext_resource type="Script" uid="uid://cocyyess4j6in" path="res://scripts/gameplay/flower_director.gd" id="23_y6deb"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_2wyq8"]
 size = Vector2(420, 420)
@@ -79,7 +79,7 @@ light_color = Color(1, 0.9, 0.74, 1)
 light_energy = 1.35
 shadow_enabled = true
 directional_shadow_mode = 1
-directional_shadow_max_distance = 70.0
+directional_shadow_max_distance = 90.0
 
 [node name="Ground" type="MeshInstance3D" parent="." unique_id=981320069]
 material_override = ExtResource("2_a8y0u")
@@ -92,6 +92,10 @@ snap = 5
 [node name="Forest" type="Node3D" parent="." unique_id=1818423097]
 script = ExtResource("5_pm3ni")
 target_path = NodePath("../Glider")
+detail_groups = PackedStringArray("Grass", "Plants")
+obstacle_groups = PackedStringArray("Trees", "Giants", "Features")
+chunk_scene_paths = PackedStringArray("res://scenes/world/chunk_grove.tscn", "res://scenes/world/chunk_pines.tscn", "res://scenes/world/chunk_pond.tscn", "res://scenes/world/chunk_meadow.tscn")
+chunk_weights = PackedFloat32Array(0.3, 0.25, 0.2, 0.25)
 
 [node name="Chunk_m1_m1" parent="Forest" unique_id=1190413605 instance=ExtResource("3_jkv2x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 0, -48)
@@ -126,11 +130,6 @@ target_path = NodePath("../Glider")
 [node name="SteerInput" type="Node" parent="." unique_id=1527390358]
 script = ExtResource("12_og1vs")
 
-[node name="DeliveryDirector" type="Node" parent="." unique_id=1700608935]
-script = ExtResource("13_2wyq8")
-courier_path = NodePath("../Glider")
-streamer_path = NodePath("../Forest")
-
 [node name="FX" type="CanvasLayer" parent="." unique_id=1328269290]
 layer = 5
 
@@ -143,9 +142,9 @@ layer = 10
 
 [node name="TitleScreen" parent="UI" unique_id=329151715 instance=ExtResource("11_pm3ni")]
 
-[node name="PauseScreen" parent="UI" unique_id=1818239854 instance=ExtResource("12_y6deb")]
-
 [node name="ResultsScreen" parent="UI" unique_id=1843180699 instance=ExtResource("13_og1vs")]
+
+[node name="CustomizeScreen" parent="UI" unique_id=1793854701 instance=ExtResource("16_pm3ni")]
 
 [node name="Fireflies" type="GPUParticles3D" parent="." unique_id=1142385555]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
@@ -186,3 +185,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 26, 0)
 
 [node name="MountainRing" parent="." unique_id=1391862872 instance=ExtResource("23_og1vs")]
 target_path = NodePath("../Glider")
+
+[node name="FlowerDirector" type="Node" parent="." unique_id=2094386800]
+script = ExtResource("23_y6deb")
+glider_path = NodePath("../Glider")
+streamer_path = NodePath("../Forest")

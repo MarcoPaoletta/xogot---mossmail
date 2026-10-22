@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://be6p1vv4itlh0"]
+
+[ext_resource type="Shader" uid="uid://grh2ia58ogoo" path="res://shaders/pickup_halo.gdshader" id="1_fstgq"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_fstgq")
+shader_parameter/halo_color = Color(1, 0.72, 0.55, 1)
+shader_parameter/strength = 0.55
+shader_parameter/pulse_speed = 2.4

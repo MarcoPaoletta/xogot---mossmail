@@ -1,0 +1,121 @@
+[gd_scene format=3 uid="uid://df1ldk2obuebs"]
+
+[ext_resource type="Theme" uid="uid://cj786csk0wg1n" path="res://ui/mossmail_theme.tres" id="1_4cbs5"]
+[ext_resource type="Script" uid="uid://b8lgvalb4w8sw" path="res://scripts/ui/customize_screen.gd" id="2_oh2hf"]
+[ext_resource type="FontVariation" path="res://ui/fredoka_bold.tres" id="3_wgh27"]
+[ext_resource type="PackedScene" uid="uid://g52ifopgwl1c" path="res://scenes/ui/glider_showcase.tscn" id="4_xlabb"]
+
+[node name="CustomizeScreen" type="Control" unique_id=1793854701]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("1_4cbs5")
+script = ExtResource("2_oh2hf")
+
+[node name="LeftPanel" type="Panel" parent="." unique_id=1268299408]
+layout_mode = 0
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 70.0
+offset_top = -470.0
+offset_right = 1010.0
+offset_bottom = 430.0
+mouse_filter = 2
+theme_type_variation = &"CardPanel"
+
+[node name="Left" type="VBoxContainer" parent="." unique_id=1058021880]
+layout_mode = 0
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 100.0
+offset_top = -450.0
+offset_right = 980.0
+offset_bottom = 410.0
+mouse_filter = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="Heading" type="Label" parent="Left" unique_id=2113523836]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8235294, 0.47843137, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("3_wgh27")
+theme_override_font_sizes/font_size = 54
+text = "Choose your glider"
+horizontal_alignment = 1
+
+[node name="Preview" type="SubViewportContainer" parent="Left" unique_id=1504495122]
+custom_minimum_size = Vector2(880, 520)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+stretch = true
+
+[node name="Viewport" type="SubViewport" parent="Left/Preview" unique_id=1589322716]
+own_world_3d = true
+transparent_bg = true
+msaa_3d = 2
+size = Vector2i(880, 520)
+
+[node name="GliderShowcase" parent="Left/Preview/Viewport" unique_id=1614080219 instance=ExtResource("4_xlabb")]
+
+[node name="Swatches" type="HBoxContainer" parent="Left" unique_id=100510208]
+layout_mode = 2
+theme_override_constants/separation = 26
+alignment = 1
+
+[node name="Swatch1" type="Button" parent="Left/Swatches" unique_id=938927140]
+custom_minimum_size = Vector2(84, 84)
+layout_mode = 2
+
+[node name="Swatch2" type="Button" parent="Left/Swatches" unique_id=1039697552]
+custom_minimum_size = Vector2(84, 84)
+layout_mode = 2
+
+[node name="Swatch3" type="Button" parent="Left/Swatches" unique_id=2059815577]
+custom_minimum_size = Vector2(84, 84)
+layout_mode = 2
+
+[node name="Swatch4" type="Button" parent="Left/Swatches" unique_id=1754040018]
+custom_minimum_size = Vector2(84, 84)
+layout_mode = 2
+
+[node name="Swatch5" type="Button" parent="Left/Swatches" unique_id=242622602]
+custom_minimum_size = Vector2(84, 84)
+layout_mode = 2
+
+[node name="ColorName" type="Label" parent="Left" unique_id=738230536]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Sky blue"
+horizontal_alignment = 1
+
+[node name="PlayButton" type="Button" parent="." unique_id=801531155]
+layout_mode = 0
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -560.0
+offset_top = -90.0
+offset_right = -140.0
+offset_bottom = 90.0
+theme_override_fonts/font = ExtResource("3_wgh27")
+theme_override_font_sizes/font_size = 72
+text = "Play"
+
+[node name="Credits" type="Label" parent="." unique_id=2103812900]
+modulate = Color(1, 1, 1, 0.8)
+layout_mode = 0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -50.0
+offset_bottom = -14.0
+theme_override_font_sizes/font_size = 20
+text = "Hang glider by Poly by Google (CC-BY 3.0, poly.pizza/m/bIRUD686yoA)  ·  Nature by Quaternius (CC0)  ·  Textures by ambientCG (CC0)  ·  Font: Fredoka (OFL)"
+horizontal_alignment = 1

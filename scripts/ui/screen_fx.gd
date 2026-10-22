@@ -1,7 +1,7 @@
 class_name ScreenFx
 extends ColorRect
 ## Full-screen mood layer in one draw call: vignette, film grain, speed lines
-## and a tweened colour flash (bumps, deliveries).
+## and a tweened colour flash (bumps, collected flowers).
 
 var _material: ShaderMaterial
 var _flash_tween: Tween

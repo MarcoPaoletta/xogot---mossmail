@@ -1,0 +1,85 @@
+extends RefCounted
+## Mossmail v3 acceptance test (run with xo_game_eval, mode script).
+
+func _run() -> void:
+	var tree: SceneTree = Engine.get_main_loop() as SceneTree
+	var main: Node = tree.current_scene
+	var glider: Glider = main.get_node("Glider") as Glider
+	var director: FlowerDirector = main.get_node("FlowerDirector") as FlowerDirector
+	var streamer: ChunkStreamer = main.get_node("Forest") as ChunkStreamer
+	var title: Control = main.get_node("UI/TitleScreen") as Control
+	var customize: CustomizeScreen = main.get_node("UI/CustomizeScreen") as CustomizeScreen
+	var hud: Hud = main.get_node("UI/Hud") as Hud
+	var results: Control = main.get_node("UI/ResultsScreen") as Control
+	_check("landscape locked (orientation 0)", int(ProjectSettings.get_setting("display/window/handheld/orientation")) == 0)
+	_check("mesh LOD off (no gradual leaf pop in)", float(ProjectSettings.get_setting("rendering/mesh_lod/lod_change/threshold_pixels")) == 0.0)
+	_check("title visible at boot", title.visible and not customize.visible)
+	_check("no pause screen", main.get_node_or_null("UI/PauseScreen") == null)
+	main.call("_enter_customize")
+	await _frames(tree, 30)
+	_check("Start opens the glider selection", customize.visible)
+	customize.call("_select", 2)
+	await _frames(tree, 2)
+	var mat: ShaderMaterial = glider.get("_material") as ShaderMaterial
+	_check("colour choice recolours the glider", mat != null and is_equal_approx(float(mat.get_shader_parameter(&"target_hue")), GliderPalette.HUES[2]))
+	customize.call("_select", 0)
+	main.call("_start_run")
+	await _frames(tree, 3)
+	director.set("_delay_left", 0.0)
+	await _frames(tree, 3)
+	var spawned: Array = director.get("_spawned")
+	_check("wave of flowers started", spawned.size() >= 5)
+	var terrain: TerrainField = main.get_node("Terrain") as TerrainField
+	var lo: float = INF
+	var hi: float = -INF
+	var clear: bool = true
+	for f: Node3D in spawned:
+		var h: float = f.global_position.y - terrain.height_at(f.global_position.x, f.global_position.z)
+		lo = minf(lo, h)
+		hi = maxf(hi, h)
+		if not streamer.is_point_clear(f.global_position, 1.0):
+			clear = false
+	print("flower heights above ground ", snappedf(lo, 0.1), " to ", snappedf(hi, 0.1))
+	_check("flowers at different heights", hi - lo > 8.0)
+	_check("no flower inside a tree canopy", clear)
+	var first: Node3D = spawned[0]
+	var target: Vector3 = first.global_position
+	glider.altitude_input = 1.0
+	glider.global_position = target + Vector3(0, 6.0, 0)
+	await _frames(tree, 3)
+	_check("flying 6 m above a flower does NOT collect it", director.flowers == 0)
+	glider.global_position = target
+	await _frames(tree, 3)
+	_check("touching the flower collects it", director.flowers == 1)
+	var lever: AltitudeLever = hud.get_lever()
+	_check("altitude lever exists", lever != null)
+	lever.value = 0.0
+	await _frames(tree, 120)
+	var low_alt: float = glider.get_altitude()
+	lever.value = 1.0
+	await _frames(tree, 240)
+	var high_alt: float = glider.get_altitude()
+	print("lever 0 altitude ", snappedf(low_alt, 0.1), "  lever 1 altitude ", snappedf(high_alt, 0.1))
+	_check("lever raises the glider", high_alt > low_alt + 20.0)
+	var speed_before: float = glider.get_speed()
+	glider.boost()
+	await _frames(tree, 60)
+	_check("golden clover super speed", glider.is_boosting() and glider.get_speed() > speed_before * 1.3)
+	print("speed ", snappedf(speed_before, 0.1), " -> ", snappedf(glider.get_speed(), 0.1))
+	for i: int in 3:
+		director.set("_delay_left", 0.0)
+		await _frames(tree, 3)
+		director.time_left = 0.0
+		await _frames(tree, 3)
+	_check("three missed waves end the flight", director.lives == 0 and not director.running)
+	await _frames(tree, 4)
+	_check("results screen shown", results.visible)
+
+
+func _frames(tree: SceneTree, count: int) -> void:
+	for i: int in count:
+		await tree.physics_frame
+
+
+func _check(label: String, ok: bool) -> void:
+	print(("PASS " if ok else "FAIL ") + label)

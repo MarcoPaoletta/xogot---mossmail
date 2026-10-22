@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://bjbu0t3ovqobn"]
+
+[ext_resource type="Script" uid="uid://p604siy6tna0" path="res://scripts/gameplay/speed_clover.gd" id="1_tjmkn"]
+[ext_resource type="Material" uid="uid://ct5hhuaddn8ul" path="res://materials/halo_clover.tres" id="2_e88a2"]
+[ext_resource type="PackedScene" uid="uid://c30f2mplviadu" path="res://assets/nature/glTF/Clover_1.gltf" id="3_5qfsi"]
+[ext_resource type="Material" uid="uid://bvwjfbqpe6lcm" path="res://materials/fx_soft_glow.tres" id="4_nko7v"]
+[ext_resource type="QuadMesh" uid="uid://cxlx6eyh3a60g" path="res://materials/fx_quad.tres" id="5_134hr"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2tkey"]
+radius = 1.6
+
+[sub_resource type="QuadMesh" id="QuadMesh_bpsp4"]
+size = Vector2(7, 7)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jo3q6"]
+emission_shape = 2
+emission_sphere_radius = 2.0
+direction = Vector3(0, 1, 0)
+spread = 60.0
+initial_velocity_min = 0.5
+initial_velocity_max = 1.5
+gravity = Vector3(0, 1, 0)
+scale_min = 0.12
+scale_max = 0.26
+color = Color(1, 0.86, 0.35, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_etnii"]
+emission_shape = 1
+emission_sphere_radius = 0.6
+direction = Vector3(0, 0, 1)
+spread = 180.0
+initial_velocity_min = 6.0
+initial_velocity_max = 12.0
+gravity = Vector3(0, 0, 0)
+damping_min = 4.0
+damping_max = 8.0
+scale_min = 0.18
+scale_max = 0.34
+color = Color(1, 0.84, 0.3, 1)
+
+[node name="SpeedClover" type="Node3D" unique_id=228519662]
+
+[node name="Pickup" type="Area3D" parent="." unique_id=865571677]
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("1_tjmkn")
+
+[node name="Shape" type="CollisionShape3D" parent="Pickup" unique_id=109521029]
+shape = SubResource("SphereShape3D_2tkey")
+
+[node name="Halo" type="MeshInstance3D" parent="Pickup" unique_id=766192171]
+material_override = ExtResource("2_e88a2")
+cast_shadow = 0
+mesh = SubResource("QuadMesh_bpsp4")
+
+[node name="Visual" type="Node3D" parent="Pickup" unique_id=1830668689]
+transform = Transform3D(2.8, 0, 0, 0, 2.8, 0, 0, 0, 2.8, 0, -1.6, 0)
+
+[node name="Clover" parent="Pickup/Visual" unique_id=1975550425 instance=ExtResource("3_5qfsi")]
+
+[node name="Glow" type="OmniLight3D" parent="Pickup" unique_id=1000302546]
+light_color = Color(1, 0.82, 0.3, 1)
+light_energy = 1.2
+omni_range = 5.5
+
+[node name="Sparkle" type="GPUParticles3D" parent="Pickup" unique_id=742981949]
+material_override = ExtResource("4_nko7v")
+cast_shadow = 0
+amount = 30
+lifetime = 1.4
+visibility_aabb = AABB(-8, -8, -8, 16, 16, 16)
+process_material = SubResource("ParticleProcessMaterial_jo3q6")
+draw_pass_1 = ExtResource("5_134hr")
+
+[node name="Burst" type="GPUParticles3D" parent="Pickup" unique_id=101548549]
+material_override = ExtResource("4_nko7v")
+cast_shadow = 0
+emitting = false
+amount = 60
+one_shot = true
+explosiveness = 1.0
+visibility_aabb = AABB(-8, -8, -8, 16, 16, 16)
+process_material = SubResource("ParticleProcessMaterial_etnii")
+draw_pass_1 = ExtResource("5_134hr")

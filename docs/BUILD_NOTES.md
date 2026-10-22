@@ -32,3 +32,49 @@
 - Glider orientation was measured from the vertex spread: wingtips at +X, keel nose at −X. The model is rotated 90° and scaled 0.016 (6 m span).
 - Embedded-runner metrics while flying: about 800k primitives, about 500 draw calls, 8 FPS in the agent session (a 3.5k-triangle scene also runs at 1–4 FPS there). Check real FPS on device. If needed, set `Forest.radius` to 1, or lower `rendering/scaling_3d/scale`.
 - Avoid in Xogot: unsaved scenes with instanced models, and `editor mode set` while heavy scenes are open. Both crashed the editor in this session.
+
+## v3 (2026-10-22)
+- `tests/game/v3_test.gd.txt`: 16/16 PASS, zero runtime errors.
+  - **Landscape and LOD:** landscape is locked and LOD is off.
+  - **Flow:** title → selection → flight, and there is no pause screen.
+  - **Colours:** recolouring works.
+  - **Flowers:** they spawn at 10.8 to 38.1 m above ground and none are inside a canopy. Flying 6 m above one does not collect it; touching it does.
+  - **Lever:** from 7.6 m (or 15 m in a hilly spot) up to 51–54 m.
+  - **Boost:** speed goes from 13 to 22.7 m/s.
+  - **Hearts:** three missed waves lead to results.
+- **Fix:** the additive halo and glow shaders use `fog_disabled`. With fog, the halo quads showed as grey squares.
+- **Fix:** the low sky "ground" band was visible between ridges; `fog_sky_affect` is now 0.6.
+- **Unchecked on device:** the pitch tilt direction. Set `SteerInput.invert_pitch` if tilting toward you dives.
+- **Completion pass:**
+  - Mushroom homes are pure scenery now: their delivery zone, beacon, confetti and script are removed.
+  - Hearts are 104 × 98 px.
+  - The results caption node and all remaining internal "delivery" and "updraft" wording are renamed.
+  - The flight camera is centred; only the menus keep the right-hand framing.
+  - The v3 test still passes 16/16 with zero runtime errors. Flowers spawned at 14.4–40 m; the lever spans 14.6–55.9 m.
+- **v3 polish:**
+  - **Smoother climbs:** the height target now eases toward the lever (`altitude_follow` 2.2), and vertical speed is acceleration-limited (`vertical_accel` 10 m/s²). Nose pitch is capped at 12° with its own smoothing.
+    - Measured on a lever snap from 0.2 to 1.0: vertical speed changes at most 0.17 m/s per frame (before, up to 9 m/s in one frame), and pitch changes at most 0.22° per frame.
+  - **Lever 40% bigger:** 154 × 560 px, track 64 px, knob radius 53 px.
+  - **Calmer pickups:**
+    - Lights at energy 1.0–1.2 and range 4.5–5.5 m (was 3.5–4.5, 9–11 m).
+    - Rim glow 0.9 (was 1.6–1.8), halo strength 0.5–0.55.
+  - **Tests:** the v3 test is still 16/16 with zero runtime errors.
+- **v3 polish, round 2 (user feedback):**
+  - **Lever smoothing reverted.** It made climbing slower and did not fix the glitch. The original response is back: about 8.8 m climbed in the first second after a lever snap.
+  - **Climb glitch fix:** the camera rig now has `physics_interpolation_mode = OFF`. The rig is placed every rendered frame from the glider's interpolated transform; letting physics interpolation also smooth it between physics ticks makes it stutter (Godot's guidance for cameras moved in `_process`). Visual confirmation is pending on device, because the embedded runner only reaches a few FPS.
+  - **Collectibles:** no glow overlay on the model and no spin, only a 0.35 m bob. The soft halo behind them stays. The flower face is tilted to −30° so it reads from every direction without spinning.
+  - **Tests:** the v3 test is still 16/16 with zero runtime errors.
+- **v3 polish, round 3: forest and editor preview** (20:09:59 to 20:14:38)
+  - **Re-laid out all four chunks with canopy-aware spacing:**
+    - Canopy radius per model, measured from the glTF footprints.
+    - Trees at least 0.9 × (rA + rB) apart, so only leaf tips may touch.
+    - Every canopy stays fully inside its 48 m chunk, so neighbouring chunks never clip.
+  - **Denser and prettier:**
+    - Grove 20 trees (was 14), pines 23 (was 15), pond 14 (was 8), meadow 12 (was 5).
+    - Trees are grouped into groves with glades between them; undergrowth sits around the trunks; flower and grass patches come in clumps of 3 to 6.
+  - **Editor preview (skill Rule 1c):** `TerrainField` and `ChunkStreamer` are `@tool`.
+    - In the editor, the starting chunks sit on the hills and show all their detail.
+    - `NOTIFICATION_EDITOR_PRE_SAVE` resets props to their authored height; `POST_SAVE` re-seats them.
+    - Verified: 0 chunk-child overrides in main.tscn after saving.
+  - **Load:** about 1.5M primitives per frame in flight (was about 0.8M), because of the extra trees and LOD being off. Check FPS on device. If needed, lower `Forest.radius` to 1 or remove some trees from the outer ring.
+  - **Tests:** the v3 test is still 16/16 with zero runtime errors.
